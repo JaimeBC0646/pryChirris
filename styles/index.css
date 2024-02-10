@@ -1,0 +1,21 @@
+.divMenu{
+    background-image: url(/images/bgCoffee.jpg);
+    
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    border: solid black;
+    border-radius: 2rem;
+
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+    margin-top: 1rem;
+    margin-left: 10%;
+    margin-right: 10%;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.infoName{
+    margin-left: 10%;
+    width: 60%;
+    border: black solid;
+}

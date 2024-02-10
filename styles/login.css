@@ -1,0 +1,150 @@
+/*
+.loginDiv{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    margin-right: 4rem;
+    margin-left: 4rem;
+}
+*/
+
+.titleMod{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    /*margin-right: 4rem;*/
+    /*margin-left: 4rem;*/
+    /*border: purple solid*/
+}
+
+.loginForm{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 25%;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    /*border: black solid;*/
+}
+
+form{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /*border: white solid;*/
+}
+
+.homeLink{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /*border: orangered solid;*/
+}
+.homeLink .homeIco{
+    width: 2rem;
+    height: 2rem;
+    margin: 0.5rem;
+}
+
+
+.homeLink a{
+    color: black;
+    text-decoration: none;
+    font-size: 18px;
+    margin: 0.3rem;
+}
+.homeLink a:hover{
+    color: blue;
+    font-size: 20px
+}
+
+/*---------------------------------------------------*/
+.h1{
+    text-align: center;
+    font-style: oblique;
+    border: solid 4px;
+    border-radius: 30px;
+    padding: 1rem;
+    width: 40%;
+    font-size: 2rem;
+    background-color: rgb(221, 194, 41);
+    
+}
+
+.icoUser{
+    margin-top: 1rem;
+    width: 150px;
+    height: 150px;
+    border-radius:100px;
+    border:4px solid rgb(0, 0, 0);
+}
+
+.frmLogin{
+    display: flex;
+    flex-direction: column;
+}
+
+.frmLogin input{
+    width: 90%;
+    border: solid 3px black;
+    border-radius: 10px;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    /*font-family:'Buxton Sketch';*/
+}
+
+#lblAutenticacion, #lblCampos, #lblReglasPass{
+    font-size: 1.5rem;
+    color: red;
+}
+
+/*
+select{
+    width: 70%;
+    border: solid 3px black;
+    border-radius: 10px;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin: 0.5rem;
+    font-size: 1.5rem;
+    font-family:'Buxton Sketch';
+    padding-left: 1rem;
+}
+*/
+
+#btnlogin{
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    border: solid 3px black;
+    border-radius: 10px;
+    font-size: 1rem;
+    background-color: rgb(221, 194, 41);
+    font-family:'Buxton Sketch';
+    text-decoration: none;
+    color: black;
+}
+
+#btnlogin:hover{
+    border: solid 3px black;
+    border-radius: 10px;
+    font-size: 1rem;
+    background-color: rgb(255, 153, 0);
+}
+
+
+
+/*//////////////////////////////////////////////////////////////////////*/

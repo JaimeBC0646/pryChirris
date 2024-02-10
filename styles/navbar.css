@@ -1,0 +1,217 @@
+body {
+    /*
+    #FFD7AB (Crema Blanco)
+    #E6B68B (Crema crema)
+    #CD966C (Crema Cafe leve)
+    #B4764F (Crema Cafe )
+    #9A5833 (Crema Cafe oscuro)
+    */
+    background-color: #E6B68B;
+    margin: 0;
+    padding: 0;
+    /*background-image: url("/images/bgCoffee.png");*/
+}
+
+/*
+#874421 (Cafe)
+    #7C3B1A (Cafe 2)
+    #713112 (Cafe 3)
+    #66280A (Cafe 4)
+    #5B1F00 (Cafe 5)
+    */
+
+/*INICIO - NAVBAR*/
+.navbarMain {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    /*
+    background-image: url("/images/nav_bg.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    */
+    background: #874421;
+    /*border: rgb(255, 174, 0) solid;*/
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.funcionesPublicas{
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /*border: green solid;*/
+}
+
+.logoDiv {
+    width: 15%;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+   /*border: blue solid;*/
+}
+.logoChirris {
+    width: 100%;
+}
+.canasta {
+    width: 5%;
+}
+
+
+
+.enlaces{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    /*border: rgb(255, 174, 0) solid;*/
+}
+
+.enlaces a{
+    padding: 1rem;
+    transition: all ease-in-out 350ms;
+    color: black;
+    text-decoration: none;
+}
+
+.funcionesPublicas .enlaces a{
+    color: #FFD7AB;
+}
+
+.enlaces a:hover{
+    color: #874421;
+    background: #FFD7AB;
+    border-radius: 40px;
+}
+
+
+
+.funcionesUsuario {
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    color: #FFD7AB;
+    /*border: red solid;*/
+}
+
+.funcionesUsuario div a {
+    padding: 0.5rem;
+    margin: 0.5rem;
+    color: #FFD7AB;
+    text-decoration: none;
+}
+
+.funcionesUsuario .login-Registro a:hover{
+    color: #874421;
+    background: #FFD7AB;
+    border-radius: 40px;
+    transition: all ease-in-out 350ms;
+}
+
+
+
+
+
+
+/*
+.navbarMain a {
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+    transition: all ease-in-out 250ms;
+    color: black;
+    text-decoration: none;
+}
+
+
+.navbarMain a:hover {
+    color: #874421;
+    background: #FFD7AB;
+    border-radius: 40px;
+}
+*/
+
+/*
+.sesionDiv {
+    width: 10%;
+    text-align: center;
+    background: #ff590097;
+    border: solid 3px black;
+    border-radius: 3rem;
+
+}
+*/
+/*FIN - NAVBAR*/
+
+
+
+
+
+
+
+
+
+/* INICIO - TITLE & ELEMENTS */
+/*
+.titleMod{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-right: 4rem;
+    margin-left: 4rem;
+    /*border: solid  green;
+}
+
+
+.rowMain{
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+
+.btnRefresh{
+    text-decoration: none;
+    color:black;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    justify-self: center;
+    text-align: center;
+    padding: 0.5rem;
+    border: solid;
+    border-radius: 10px;
+    background-color: rgb(221, 194, 41);
+    font-size: 1.5rem;
+    font-family:'Buxton Sketch';
+}
+
+.btnRefresh:hover{
+    font-size: 1.6rem;
+    padding: 0.6rem;
+}
+
+
+.scroll-table {   
+    max-height: 300px; /* Altura máxima para ver registros 
+    overflow-y: auto;  /* Coloca scrollbar vertical
+    /border: solid aqua
+}
+
+
+
+/*---------------------------------------------------
+
+label{
+    font-size: 3.5rem;
+    display: flex;
+    justify-content: center;;
+}
+*/

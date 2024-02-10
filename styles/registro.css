@@ -1,0 +1,145 @@
+
+.registerForm{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:flex-start;
+    width: 50%;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    /*border: white solid;*/
+}
+
+.registerForm p{
+    font-size: 15px;
+}
+
+.divForm{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    /*border: solid red;*/
+}
+
+.formInputs{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 45%;
+    height: auto;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    /*border: rgb(40, 216, 24) solid;*/
+}
+
+.formInputs input{
+    width: 85%;
+    border: solid 3px black;
+    border-radius: 10px;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    /*font-family:'Buxton Sketch';*/
+}
+
+.divSexSelect{
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    /*border: red solid;*/
+}
+
+.rdbOption{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    /*border: gray solid;*/
+}
+
+.rdbOption label{
+    font-size: 1.2rem;
+}
+
+
+/*---------------------------------------------------*/
+/*.h1{
+    text-align: center;
+    font-style: oblique;
+    border: solid 4px;
+    border-radius: 30px;
+    padding: 1rem;
+    width: 40%;
+    font-size: 2rem;
+    background-color: rgb(221, 194, 41);
+    
+}
+*/
+
+#btnRegistro{
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    border: solid 3px black;
+    border-radius: 10px;
+    font-size: 1rem;
+    background-color: rgb(221, 194, 41);
+    font-family:'Buxton Sketch';
+    text-decoration: none;
+    color: black;
+}
+
+#btnRegistro:hover{
+    /*font-size: 1rem;*/
+    background-color: rgb(255, 153, 0);
+}
+
+
+
+#fillInputs, #nameInput, #appInput, #apmInput, #userInput, #ageInput, #phoneInput, #emailInput, #passInput, #confirmPassInput{
+    color: red;
+}
+
+/*//////////////////////////////////////////////////////////////////////*/
+/* Responsive(> 1024px) */
+@media (max-width: 1024px) {
+    .loginForm {
+        width: 50%;
+    }
+    
+    h1 {
+        width: 50%;
+    }
+    
+    input {
+        width: 75%;
+    }
+    button {
+        width: 100%;
+    }
+}
+
+/* Responsive(> 768px) */
+@media (max-width: 768px) {
+    .loginForm {
+        width: 50%;
+    }
+    
+    h1 {
+        width: 80%;
+    }
+    
+    input {
+        width: 100%;
+    }
+    button {
+        width: 100%;
+    }
+}

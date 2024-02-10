@@ -1,0 +1,132 @@
+.lockIcon{
+    margin-top: 1rem;
+    width: 10%;
+}
+
+.recuperaContraForm{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 30%;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    /*border: black solid;*/
+}
+
+/*
+.divMessage{
+    background-color: #CA7B42;
+    border: solid;
+    border-radius: 3rem;
+    padding: 1.5rem;
+    opacity:50;
+}
+*/
+
+.buscaForm{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /*border: white solid;*/
+}
+
+.buscaForm input, .updContraForm input{
+    width: 90%;
+    border: solid 3px black;
+    border-radius: 10px;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    /*font-family:'Buxton Sketch';*/
+}
+
+
+.frmButtons{
+    display: flex;
+    flex-direction: row;
+}
+
+.frmButtons .btn{
+    border: solid 3px black;
+    border-radius: 10px;
+    background-color: rgb(221, 194, 41);
+
+    font-family:'Buxton Sketch';
+    text-decoration: none;
+    color: black;
+    font-size: 1rem;
+
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.btn:hover{
+    background-color: rgb(255, 153, 0);
+}
+
+
+
+/*---------------------------------------------------*/
+/*
+h1{
+    text-align: center;
+    font-style: oblique;
+    border: solid 4px;
+    border-radius: 30px;
+    padding: 1rem;
+    width: 40%;
+    font-size: 2rem;
+    background-color: rgb(221, 194, 41);
+}
+*/
+
+
+
+
+
+
+/*//////////////////////////////////////////////////////////////////////*/
+/* Responsive(> 1024px) */
+@media (max-width: 1024px) {
+    .loginForm {
+        width: 50%;
+    }
+    
+    h1 {
+        width: 50%;
+    }
+    
+    input {
+        width: 75%;
+    }
+    button {
+        width: 100%;
+    }
+}
+
+/* Responsive(> 768px) */
+@media (max-width: 768px) {
+    .loginForm {
+        width: 50%;
+    }
+    
+    h1 {
+        width: 80%;
+    }
+    
+    input {
+        width: 100%;
+    }
+    button {
+        width: 100%;
+    }
+}
