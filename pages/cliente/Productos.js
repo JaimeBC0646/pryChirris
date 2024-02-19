@@ -1,12 +1,13 @@
+/*HOJA DE ESTILOS: digitalMenu_Cliente.css */
 import axios from 'axios';
 import { Layout } from '@/componentes/Layout';
 import Link from 'next/link';
-import { Navbar } from '@/componentes/Navbar';
+import { NavbarCliente } from '@/componentes/NavbarCliente';
 
 function Listado({ productos }) {
   return (
     <Layout>
-      <Navbar />
+      <NavbarCliente />
       {productos.map(producto => (
         <div className='contentMenu'>
           <div className="productCard">
@@ -24,13 +25,15 @@ function Listado({ productos }) {
             <h4>{producto.vchDescripcion}</h4>
 
             <div className="buttons">
-              <Link href={`/productos/${producto.idProducto}`} key={producto.id} >
-                <button className="btnBuy" >
+              {/* <button className="btnBuy" >
                   EDITAR
-                </button>
+                </button>*/}
+                
+              <Link href={`/productos/${producto.idProducto}`} key={producto.id} >
+                  Agregar a la Canasta
               </Link>
               <button className="btnAddBasket">
-                ELIMINAR
+                Comprar Ahora
               </button>
             </div>
           </div>

@@ -17,7 +17,7 @@ export function ActualizarContrasena() {
     const [mnsjCampos, setMnsjCampos] = useState("");
     //Reglas de nueva contraseña y actualizacion
     const [mnsjReglasPass, setMnsjReglasPass] = useState("");
-    const [btnEstado, setBtnEstado] = useState(true);
+    //const [btnEstado, setBtnEstado] = useState(true);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -25,6 +25,19 @@ export function ActualizarContrasena() {
             setMnsjCampos("Por favor, introduzque una nueva contraseña ⚠");
             return;
         }
+
+        /*Reglas de contraseña*/
+        // Validar la contraseña con la expresión regular
+        const regexPassRule = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$\-+_*/':;!¡?¿]).{8,}$/;
+        if (usuario.txtNewContra !== "" && !regexPassRule.test(usuario.txtNewContra)) {
+            setMnsjReglasPass("La contraseña debe contener al menos una mayúscula, una minúscula, un número y un carácter especial, y tener al menos 8 caracteres de longitud");
+            return;
+            //setBtnEstado(true); //Habilita el envio del form (actualiza)
+        } else {
+            setMnsjReglasPass("");
+            //setBtnEstado(false); //Deshabilita el envio del form (no actualiza)
+        }
+
 
         try {
             const idCliente = router.query.id; // Tomo el ID de la URL
@@ -52,15 +65,8 @@ export function ActualizarContrasena() {
         if (value.trim() !== "") {
             setMnsjCampos("");
         }
-        // Validar la contraseña con la expresión regular
-        const expRegular = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$\-+_*/':;!¡?¿]).{8,}$/;
-        if (value.trim() !== "" && !expRegular.test(value)) {
-            setMnsjReglasPass("La contraseña debe contener al menos una mayúscula, una minúscula, un número y un carácter especial, y tener al menos 8 caracteres de longitud");
-            setBtnEstado(true); //Habilita el envio del form (actualiza)
-        } else {
-            setMnsjReglasPass("");
-            setBtnEstado(false); //Deshabilita el envio del form (no actualiza)
-        }
+        
+    
         //console.log(name + " =  " + value);
         //console.log("id recibido: " + router.query.id);
 
@@ -88,8 +94,8 @@ export function ActualizarContrasena() {
                     <input type="password" name="txtNewContra" id="txtNewContra" placeholder="Contraseña nueva" title="Contraseña nueva" onChange={handleChange} />
 
                     <div className="frmButtons">
-                        <button type="submit" className="btn" id="btnActualizaContra" disabled={btnEstado}> ACTUALIZAR CONTRASEÑA </button>
-
+                        <button type="submit" className="btn" id="btnActualizaContra" > ACTUALIZAR CONTRASEÑA </button>
+                        {/* disabled={btnEstado} */}
                         <a href="./Login" className="btn">CANCELAR</a>
                     </div>
                 </form>

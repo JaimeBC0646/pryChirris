@@ -145,6 +145,13 @@ select{
     background-color: rgb(255, 153, 0);
 }
 
+#btnlogin:disabled{
+    border: solid 3px rgb(26, 25, 25);
+    border-radius: 10px;
+    font-size: 1rem;
+    background-color: rgb(167, 118, 45);
+}
+
 
 
 /*//////////////////////////////////////////////////////////////////////*/
