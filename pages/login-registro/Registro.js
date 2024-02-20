@@ -1,8 +1,6 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import ReCAPTCHA from "react-google-recaptcha";
-import { siteKey } from './keyCaptcha';
 
 
 export function FormRegistro() {
@@ -22,6 +20,8 @@ export function FormRegistro() {
         rdbSexo: "",
         txtPreguntaSecreta: "",
         txtRespuestaSecreta: "",
+
+        rdbTyC: "",
     });
 
     /* MENSAJES DE VALIDACIONES */
@@ -39,14 +39,27 @@ export function FormRegistro() {
     const [mnsjSexo, setMnsjSexo] = useState("");
     const [mnsjPregunta, setMnsjPregunta] = useState("");
     const [mnsjRespuesta, setMnsjRespuesta] = useState("");
+    const [mnsjTyC, setMnsjTyC] = useState("");
 
 
-    const [mnsjCaptcha, setMnsjCaptcha] = useState("");
     const [btnEstado, setBtnEstado] = useState(false);
     const [estadoPregunta, setEstadoPregunta] = useState(true);
     //const [mnsj, setMnsj = useState("");
 
-    const [captchaEstado, setCaptchaEstado] = useState(false);
+    //Estado y funcion para mostrar/ocultar contraseña
+    const [mostrarPass, setMostrarPass] = useState(false);
+    const clickMostrarPass = () => {
+        setMostrarPass(!mostrarPass);
+    };
+
+    
+    const [mostrarConfirmaPass, setMostrarConfirmaPass] = useState(false);
+    const clickMostrarConfirmaPass = () => {
+        setMostrarConfirmaPass(!mostrarConfirmaPass);
+    };
+
+    
+
     const [formValido, setFormEstado] = useState(0);
 
 
@@ -232,15 +245,17 @@ export function FormRegistro() {
         }
 
 
-        /*
-                if (captchaEstado == false) {
-                    setMnsjCaptcha("Por favor, complete el CAPTCHA ⚠");
-                    return;
-                }
-                else{
-                    setMnsjCaptcha("");
-                }
-        */
+
+        /*Seleccion de radioboton sexo*/
+        if (usuario.rdbTyC!="1") {
+            setMnsjTyC("Debe aceptar nuestros terminos y condiciones para registrarse ⚠");
+            setFormEstado(0);
+            return;
+        }
+        else {
+            setMnsjTyC("");
+            setFormEstado(1);
+        }
 
 
 
@@ -250,8 +265,9 @@ export function FormRegistro() {
                 const result = await axios.post('/api/login-registro?action=registro', usuario);
 
                 if (result) {
-                    //alert("USER EXIST: "+result.data.vchUsuario)
-                    alert("Enviando codigo al correo...")
+                    console.log(result);
+                    
+                    alert("Enviando codigo al correo...");
                     router.push({
                         //Ruta a donde redirecciona
                         pathname: './AltaRegistro',
@@ -374,7 +390,8 @@ export function FormRegistro() {
                         <label id="lblAdvertencias" style={{ visibility: mnsjReglasPass ? 'visible' : 'hidden' }}>
                             {mnsjReglasPass ? mnsjReglasPass : ""}
                         </label>
-                        <input type="password" name="txtPassword" id="txtPassword" placeholder="Contraseña" minLength="8" onChange={handleChange} />
+                        <input type={mostrarPass ? "text" : "password"} name="txtPassword" id="txtPassword" placeholder="Contraseña" minLength="8" onChange={handleChange} />
+                        <button type="button" onClick={clickMostrarPass} className="password-toggle-btn"> <img src={mostrarPass ? "/images/hidePass.png" : "/images/showPass.png"} /> </button>
 
 
 
@@ -382,13 +399,12 @@ export function FormRegistro() {
                         <label id="lblAdvertencias" style={{ visibility: mnsjConfirmaPass ? 'visible' : 'hidden' }}>
                             {mnsjConfirmaPass ? mnsjConfirmaPass : ""}
                         </label>
-                        <input type="password" name="txtConfirmaPassword" id="txtConfirmaPassword"
-                            placeholder="Confirmar contraseña" title="La contraseña debe ser igual al campo anterior" onChange={handleChange} />
+                        <input type={mostrarConfirmaPass ? "text" : "password"} name="txtConfirmaPassword" id="txtConfirmaPassword" placeholder="Confirmar contraseña" title="La contraseña debe ser igual al campo anterior" onChange={handleChange} />
+                        <button type="button" onClick={clickMostrarConfirmaPass} className="password-toggle-btn"> <img src={mostrarConfirmaPass ? "/images/hidePass.png" : "/images/showPass.png"} /> </button>
 
                         {/* Campo Sexo*/}
                         <label id="lblAdvertencias" style={{ visibility: mnsjSexo ? 'visible' : 'hidden' }}>
                             {mnsjSexo ? mnsjSexo : ""}
-
                         </label>
                         <div className="divSexSelect">
                             <div className="rdbOption">
@@ -432,18 +448,16 @@ export function FormRegistro() {
                     </div>
                 </div>
 
-                <p>
-                    Al hacer clic en Registrarte, aceptas las Condiciones, la Política de privacidad y la Política de cookies.
-                </p>
 
-                {/* 
-                <label htmlFor="lblCampos" id="lblCampos" style={{ visibility: mnsjCaptcha ? 'visible' : 'hidden' }}>
-                    {mnsjCaptcha ? mnsjCaptcha : ""}
-                </label>
-
-                <ReCAPTCHA sitekey={siteKey} onChange={() => setCaptchaEstado(true)} />
-                */}
-
+                
+                {/* Campo TyC*/}
+                <label id="lblAdvertencias" style={{ visibility: mnsjTyC ? 'visible' : 'hidden' }}>
+                            {mnsjTyC ? mnsjTyC : ""}
+                        </label>
+                <div className="rdbOption">
+                    <input type="radio" id="rdbTyC" name="rdbTyC" value="1" onChange={handleChange} />
+                    <p>Al hacer clic en Registrarte, aceptas las Condiciones, la Política de privacidad y la Política de cookies.</p>
+                </div>
 
                 <button type="submit" id="btnRegistro" >REGISTRARSE</button>
                 {/*disabled={btnEstado} */}

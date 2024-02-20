@@ -29,22 +29,27 @@ export function RecuperarContrasena() {
             //Enviar por post la accion a realizar dependiendo del formulario
             const result = await axios.post('/api/login-registro?action=recuperaContra', usuario);
 
-            //console.log("(CLIENTE result): "+result);
-            //console.log("(CLIENTE r.data): "+result.data);
-            //console.log("(CLIENTE r.idC): "+ result.idCliente)
-            //console.log("(CLIENTE r[]]): "+result[0].idCliente);
+            console.log("(CLIENTE result): ",result);
+            /*
+            // NO SIRVENPOR COMO SE MANEJA LA INFORMACION DESDE LA API LOCAL
+            console.log("(CLIENTE r.idC): "+ result.idCliente)
+            console.log("(CLIENTE r[]]): "+result[0].idCliente);
+            */
             if (result) {
-                alert("id: "+result.data)
-                alert("Encontrado...");
+                //alert("id: "+result.data)
+                //alert("Encontrado...");
                 //router.push('./ActualizarContrasena');
-                /*
+                
                 router.push({
                     //Ruta a donde redirecciona
-                    pathname: './ActualizarContrasena',
+                    pathname: './PreguntaSecreta',
                     //paso el id recuperado de la API
-                    query: { id: result.data }
+                    query: { 
+                        id: result.data[0][0].idUsuario, 
+                        pregunta: result.data[0][0].pregunta 
+                    }
                 });
-                */
+                
             }
         }
         catch (error) {

@@ -146,18 +146,18 @@ function FormLogin() {
                     <label htmlFor="lblCampos" id="lblCampos" style={{ visibility: mnsjCampos ? 'visible' : 'hidden' }}>
                         {mnsjCampos ? mnsjCampos : ""}
                     </label>
-
                     <input type="text" name="txtIdentidad" id="txtIdentidad" placeholder="Usuario o correo" title="Usuario o Correo" onChange={handleChange} />
 
-                    <input type={mostrarPass ? "text" : "password"} name="txtPassword" id="txtPassword" placeholder="Contraseña" title="Contraseña" onChange={handleChange} />
 
+                    <input type={mostrarPass ? "text" : "password"} name="txtPassword" id="txtPassword" placeholder="Contraseña" title="Contraseña" onChange={handleChange} />
                     <button type="button" onClick={clickMostrarPass} className="password-toggle-btn"> <img src={mostrarPass ? "/images/hidePass.png" : "/images/showPass.png"} /> </button>
+
 
                     <label htmlFor="lblCampos" id="lblCampos" style={{ visibility: mnsjCaptcha ? 'visible' : 'hidden' }}>
                         {mnsjCaptcha ? mnsjCaptcha : ""}
                     </label>
-
                     <ReCAPTCHA sitekey={siteKey} onChange={() => setCaptchaEstado(true)} />
+
 
                     <button id="btnlogin" disabled={btnEstado}> INICIAR SESION </button>
                 </form>

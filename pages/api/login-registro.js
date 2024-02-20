@@ -22,6 +22,8 @@ export default async function handler(req, res) {
         case 'activarCuenta': return await activarCuenta(req, res);
 
         case 'recuperaContra': return await recuperaContra(req, res);
+        
+        case 'validaRespuesta': return await validaRespuesta(req, res);
 
         case 'actualizaContra': return await actualizaContra(req, res);
         default:
@@ -132,6 +134,36 @@ const registraUsuario = async (req, res) => {
     }
 
     try {
+        const [result] = await pool.query('CALL SP_ClienteNuevo(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+            [txtNombre, txtApepat, txtApemat, txtFechaNacimiento,
+                txtUsuario, txtTelefono, txtCorreo, txtPassword,
+                rdbSexo, txtPreguntaSecreta, txtRespuestaSecreta, codigoVerificacion]);
+
+
+        /*
+    const [result] = await pool.query('INSERT INTO tblusuarios SET ?', 
+
+    {
+    vchNombre: txtNombre,
+    vchApepat: txtApepat,
+    vchApemat: txtApemat,
+    dtFechaNacimiento: txtFechaNacimiento,
+    vchUsuario: txtUsuario,
+    vchTelefono: txtTelefono,
+    vchCorreo: txtCorreo,
+    vchPassword: txtPassword,
+    charSexo: rdbSexo,
+    vchPreguntaSecreta: txtPreguntaSecreta,
+    vchRespuestaSecreta: txtRespuestaSecreta,
+    vchCodigoVerificacion: codigoVerificacion,
+    dtFechaRegistro: "",
+    dtUltimaSesion: "",
+    intEstadoUsuario: 0,
+    intEstadoCuenta: 0,
+    vchUltimaPassword: txtPassword,
+    idRol: 3
+    });
+    */
 
         let datosCorreo = {
             from: 'ChirrisHouse-Cafeteria@gmail.com', // Correo remitente
@@ -153,6 +185,10 @@ const registraUsuario = async (req, res) => {
                         max-width: 600px;
                         margin: 0 auto;
                         padding: 20px;
+                    }
+
+                    .logotipo{
+                        width: 50%;
                     }
             
                     .message {
@@ -193,11 +229,15 @@ const registraUsuario = async (req, res) => {
             <body>
                 <div class="container">
                     <div class="message">
-                        <img src="https://example.com/images/logoChirris1.png" alt="logoChirris">
+                        <img class="logotipo" src="https://raw.githubusercontent.com/JaimeBC0646/pryChirris/master/public/images/logoChirris1.png" alt="logoChirris">
+
                         <h1>¡Hola estimado usuario!</h1>
                         <h3>Se hace envío del código para dar de alta su cuenta registrada recientemente.</h3>
                         <h3>Su código de verificación es:</h3>
-                        <div class="code">123456</div>
+
+                        <div class="code">${codigoVerificacion}</div>
+
+                        <h3>Este codigo expira en 5 minutos, procure utilizarlo pronto.</h3>
                         <h3>Si usted no ha solicitado este código de registro, ignore este mensaje.</h3>
                         <h3>Si no eres el destinatario no deberás imprimir, copiar, retransmitir, diseminar o hacer uso de la información de este correo.</h3>
                         <h1>¡Chirris Online!</h1>
@@ -214,40 +254,27 @@ const registraUsuario = async (req, res) => {
             */
         };
 
-        const [result] = await pool.query('CALL SP_ClienteNuevo(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-            [txtNombre, txtApepat, txtApemat, txtFechaNacimiento,
-                txtUsuario, txtTelefono, txtCorreo, txtPassword,
-                rdbSexo, txtPreguntaSecreta, txtRespuestaSecreta, codigoVerificacion]);
-
-
-        /*
-    const [result] = await pool.query('INSERT INTO tblusuarios SET ?', 
-
-    {
-    vchNombre: txtNombre,
-    vchApepat: txtApepat,
-    vchApemat: txtApemat,
-    dtFechaNacimiento: txtFechaNacimiento,
-    vchUsuario: txtUsuario,
-    vchTelefono: txtTelefono,
-    vchCorreo: txtCorreo,
-    vchPassword: txtPassword,
-    charSexo: rdbSexo,
-    vchPreguntaSecreta: txtPreguntaSecreta,
-    vchRespuestaSecreta: txtRespuestaSecreta,
-    vchCodigoVerificacion: codigoVerificacion,
-    dtFechaRegistro: "",
-    dtUltimaSesion: "",
-    intEstadoUsuario: 0,
-    intEstadoCuenta: 0,
-    vchUltimaPassword: txtPassword,
-    idRol: 3
-    });
-    */
 
         await transporter.sendMail(datosCorreo);
 
-        return res.status(200).json({ txtUsuario, id: result.insertId });
+
+        const [resultCuenta] = await pool.query('CALL SP_ObtenID_CuentaInactiva(?)', [txtUsuario]);
+        
+
+        console.log("res: ", resultCuenta[0][0].idUsuario);
+
+
+        /*
+        if(resultCuenta.length){
+            id = resultCuenta.data[0][0].idUsuario //Obtenme el ID del registro realizado
+            //Coloca una funciona a realizar despues de que el temporizador se acabe
+            setTimeout(async () => {
+                await pool.query('DELETE FROM tblusuarios WHERE idUsuario = ?', [id]);
+            }, 10000); //10 segundos en milis
+        }
+        */
+        
+        return res.status(200).json(resultCuenta);
     }
     catch (error) {
         return res.status(500).json({ message: error.message });
@@ -273,17 +300,39 @@ const activarCuenta = async (req, res) => {
     }
 }
 
+
 const recuperaContra = async (req, res) => {
     //console.log(req.query.action)
     const { txtIdentidad } = req.body;
     try {
-        const [result] = await pool.query('SELECT * FROM tblusuarios WHERE (vchCorreo = ? OR vchUsuario = ?)  AND idRol = 3'
-            , [txtIdentidad, txtIdentidad]);
-        console.log("(API r[]]): " + result[0].idUsuario);
+        const [result] = await pool.query('CALL SP_ObtenPregunta(?)', [txtIdentidad]);
+        
+        //console.log("(API r[]]): ", result);
+        //console.log("(API r[]]): ", result[0].id);
 
         if (result.length > 0) {
-            //console.log("(API) id: "+result[0].idCliente);
-            return res.status(200).json(result[0].idUsuario);
+            return res.status(200).json(result);
+        } else {
+            console.log("Usuario o contraseña incorrectos");
+            return res.status(401).json("Intente de nuevo...");
+        }
+    }
+    catch (err) {
+        //console.log(err)
+        return res.status(500).json({ err });
+    }
+}
+
+
+const validaRespuesta = async (req, res) => {
+    //console.log(req.query.action)
+    const idCliente = req.query.id;
+    const { txtRespuesta } = req.body;
+    try {
+        const [result] = await pool.query('CALL SP_ValidaRespuesta(?,?)', [idCliente, txtRespuesta]);
+
+        if (result.length > 0) {
+            return res.status(200).json(result);
         } else {
             console.log("Usuario o contraseña incorrectos");
             return res.status(401).json("Intente de nuevo...");
@@ -306,7 +355,7 @@ const actualizaContra = async (req, res) => {
         console.log("query: ")
         console.log(req.query);
         */
-        await pool.query('UPDATE tblusuarios SET vchPassword = ? WHERE idUsuario = ?  AND idRol = 2', [txtNewContra, idCliente]);
+        await pool.query('UPDATE tblusuarios SET vchPassword = ? WHERE idUsuario = ?  AND idRol = 3', [txtNewContra, idCliente]);
         return res.status(204).json(req.query);
     } catch (error) {
         return res.status(500).json({ message: error.message })
