@@ -1,3 +1,4 @@
+import Link from "next/link"
 
 export function NavbarCliente() {
     return (
@@ -6,11 +7,11 @@ export function NavbarCliente() {
             <nav className="navbarMain">
                 <div className="funcionesPublicas">
                     <div className="logoDiv">
-                        <a href="/"><img src="/images/logoChirris1.png" alt="logoChirris" className="logoChirris" /></a>
+                        <Link href="/"><img src="/images/logoChirris1.png" alt="logoChirris" className="logoChirris" /></Link>
                     </div>
                     <div className="enlaces">
-                        <a href="/cliente">INICIO</a>
-                        <a href="/cliente/Productos">PRODUCTOS</a>
+                        <Link href="/cliente">INICIO</Link>
+                        <Link href="/cliente/Productos">PRODUCTOS</Link>
 
                     </div>
                 </div>
@@ -19,9 +20,9 @@ export function NavbarCliente() {
                     <h3>Bienvenido : [usuario]</h3>
 
                     <div className="login-Registro">
-                        <a href="./perfil">Perfil</a>
-                        <a href="./canasta">Canasta</a>
-                        <a href="/">Cerrar Sesion</a>
+                        <Link href="./perfil">Perfil</Link>
+                        <Link href="./canasta">Canasta</Link>
+                        <Link href="/">Cerrar Sesion</Link>
                     </div>
                 </div>
 

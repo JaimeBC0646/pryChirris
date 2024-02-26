@@ -5,13 +5,13 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 
-export function RecuperarContrasena() {
+export function RecuperarCuenta() {
     // ENRUTADOR PARA REDIRIGIR
     const router = useRouter();
 
     // FUNCIONES PARA LOGIN
     const [usuario, setUsuario] = useState({
-        txtIdentidad: ""
+        txtIdentidad: "",
     });
 
 
@@ -30,44 +30,48 @@ export function RecuperarContrasena() {
 
         try {
             //Enviar por post la accion a realizar dependiendo del formulario
-            const result = await axios.post('/api/login-registro?action=recuperaContra', usuario);
+            const resultUser = await axios.post('/api/login-registro?action=recuperaCuenta', usuario);
+            console.log("Result: ",resultUser)
 
-            console.log("(CLIENTE result): ", result);
-            //console.log("length: ",result.data[0].length);
+            //console.log("resLength: ",resultUser.data[0].length)
+            //console.log("estado:  ",resultUser.data[0][0].intEstadoCuenta);
             
-            
-            if (result.data !== "" && result.data[0].length > 0) {
-                //alert("Encontrado...");
 
-                //console.log("estado: ", result.data[0][0].intEstadoCuenta)
-                if (result.data[0][0].intEstadoCuenta !== 0) {
-                    //alert("redirige")
+            //1 (encontro la cuenta) o 0 (no encontro)
+            if (resultUser.data !== "") {
+                //alert("ENCONTRADO");
+
+                //console.log("resLength: ",resultUser.data[0].length);
+                //console.log("estado: ",resultUser.data[0][0].intEstadoCuenta)
+
+                if(resultUser.data[0].length === 1 && resultUser.data[0][0].intEstadoCuenta === 0){
+                    //alert("si")
+                    //alert("El usuario esta bloqueado, redirigiendo");
                     
                     router.push({
                         //Ruta a donde redirecciona
-                        pathname: './PreguntaSecreta',
+                        pathname: './DesbloqueaCuenta',
                         //paso el id recuperado de la API
                         query: {
-                            id: result.data[0][0].idUsuario,
-                            pregunta: result.data[0][0].pregunta
+                            id: resultUser.data[0][0].idUsuario,
                         }
                     });
                     
                 }
-                else {
-                    setMnsjAutenticacion("Esta cuenta se encuentra bloqueada, intente desbloquearla o contacte con servicio al cliente si desconoce el motivo ⚠");
+                else{
+                    //alert("no")
+                    setMnsjAutenticacion("La cuenta no se encuentra bloquada, puede iniciar sesion con normalidad");
                 }
-
-
+                
             }
             else {
                 setMnsjAutenticacion("Usuario no encontrado ⚠");
-                return;
             }
+            
+            
         }
         catch (error) {
             console.error("Error de recuperar:", error);
-            //alert("No encontrado");
         }
     };
 
@@ -80,12 +84,13 @@ export function RecuperarContrasena() {
         }
         //console.log(router.pathname)
         //console.log(name + " =  " + value);
+
     }
 
 
     return (
         <div className="titleMod">
-            <h1>RECUPERACION DE CONTRASEÑA</h1>
+            <h1>RECUPERACION DE CUENTA</h1>
 
             <Image src="/images/lockIcon.png" id="frmRecuperaContra" className="lockIcon" alt="userImg" width={100} height={100} />
 
@@ -122,4 +127,4 @@ export function RecuperarContrasena() {
         </div>
     )
 }
-export default RecuperarContrasena;
+export default RecuperarCuenta;

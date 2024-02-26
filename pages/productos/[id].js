@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useRouter } from "next/router";
 import { Layout } from "../../componentes/Layout";
+import Image from "next/image";
 
 function VistaProducto({ producto }) {
   const router = useRouter();
@@ -18,7 +19,7 @@ function VistaProducto({ producto }) {
         <div className="product">
           
             <div className="imgProduct">
-              <img src={`/images/${producto.vchImage}`} alt="imgTest" />
+              <Image src={`/images/${producto.vchImage}`} alt="imgTest" width={100} height={100} />
             </div>
             
           <div className="namePrice_Product">

@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Image from 'next/image';
 
-export function RecuperarContrasena() {
+export function DesbloqueaCuenta() {
     // ENRUTADOR PARA REDIRIGIR
     const router = useRouter();
 
@@ -23,30 +23,25 @@ export function RecuperarContrasena() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!usuarioAlta.txtCodigoVerificacion) {
-            setMnsjCampos("Por favor, introduzca el codigo de verifiacion ⚠");
+            setMnsjCampos("Por favor, introduzca el codigo de desbloqueo ⚠");
             return;
         }
 
         try {
-            const idCliente = router.query.id; // Tomo el ID de la URL
-
             //Enviar por post la accion a realizar dependiendo de la accion
-            
+            const idCliente = router.query.id;
             const result = await axios.post(`/api/login-registro?action=activarCuenta&id=${idCliente}`, usuarioAlta);
-
+            console.log(result)
             if (result) {
-                //alert("ok")
+                setMnsjAutenticacion("");
+                alert("Cuenta Activada...");
+                //router.push('./ActualizarContrasena');
                 router.push('/login-registro/Login');
             }
-            /*
-            else{
-                setMnsjAutenticacion("Codigo de verififacion incorrecto ⚠");
-            }
-            */
         }
         catch (error) {
-            console.error("Error al activar Cuenta:", error);
-            setMnsjAutenticacion("Codigo de verificación incorrecto ⚠");
+            console.error("Error al reactivar Cuenta:", error);
+            setMnsjAutenticacion("Codigo de verificacion incorrecto ⚠");
             //alert("No encontrado");
         }
     };
@@ -60,19 +55,18 @@ export function RecuperarContrasena() {
         }
         //console.log(router.pathname)
         //console.log(name + " =  " + value);
-        
     }
 
 
     return (
         <div className="titleMod">
-            <h1>VALIDACION DE REGISTRO</h1>
+            <h1>DESBLOQUEO DE LA CUENTA</h1>
 
             <Image src="/images/lockIcon.png" id="frmRecuperaContra" className="lockIcon" alt="userImg" width={100} height={100} />
 
             <div className="recuperaContraForm">
                 <div className="divMessage">
-                    <h4>Ingresa el codigo que se envio al correo registrado para activar la cuenta.</h4>
+                    <h4>Ingresa el codigo que se envio al correo registrado para desbloquear la cuenta.</h4>
                 </div>
 
                 <label htmlFor="lblCampos" id="lblCampos" style={{ visibility: mnsjCampos ? 'visible' : 'hidden' }}>
@@ -104,4 +98,4 @@ export function RecuperarContrasena() {
         </div>
     )
 }
-export default RecuperarContrasena;
+export default DesbloqueaCuenta;

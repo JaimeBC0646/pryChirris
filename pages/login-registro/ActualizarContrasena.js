@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
+import Image from 'next/image';
 
 export function ActualizarContrasena() {
     // ENRUTADOR PARA REDIRIGIR
@@ -72,17 +74,13 @@ export function ActualizarContrasena() {
         if (value.trim() !== "") {
             setMnsjCampos("");
         }
-        
-    
-        //console.log(name + " =  " + value);
-        //console.log("id recibido: " + router.query.id);
-
+        setMnsjReglasPass("")
     }
     return (
         <div className="titleMod">
             <h1>ACTUALIZACION DE CONTRASEÑA</h1>
 
-            <img src="/images/lockIcon.png" id="frmRecuperaContra" className="lockIcon" alt="userImg" />
+            <Image src="/images/lockIcon.png" id="frmRecuperaContra" className="lockIcon" alt="userImg" width={100} height={100} />
 
             <div className="actualizarContraForm">
                 <div className="divMessage">
@@ -99,20 +97,20 @@ export function ActualizarContrasena() {
 
                 <form onSubmit={handleSubmit} className="updContraForm">
                     <input type={mostrarPass ? "text" : "password"} name="txtNewContra" id="txtNewContra" placeholder="Contraseña nueva" title="Contraseña nueva" onChange={handleChange} />
-                    <button type="button" onClick={clickMostrarPass} className="password-toggle-btn"> <img src={mostrarPass ? "/images/hidePass.png" : "/images/showPass.png"} /> </button>
+                    <button type="button" onClick={clickMostrarPass} className="password-toggle-btn"> <Image src={mostrarPass ? "/images/hidePass.png" : "/images/showPass.png"} alt="icoPass" width={100} height={100}/> </button>
 
                     <div className="frmButtons">
                         <button type="submit" className="btn" id="btnActualizaContra" > ACTUALIZAR CONTRASEÑA </button>
                         {/* disabled={btnEstado} */}
-                        <a href="./Login" className="btn">CANCELAR</a>
+                        <Link href="./Login" className="btn">CANCELAR</Link>
                     </div>
                 </form>
 
                 <div className="homeLink">
-                    <a href="/">
-                        <img src="/images/homeIco.png" alt="homeIco" className="homeIco" />
+                    <Link href="/">
+                        <Image src="/images/homeIco.png" alt="homeIco" className="homeIco" width={100} height={100} />
                         Volver al Inicio
-                    </a>
+                    </Link>
                 </div>
             </div>
         </div>

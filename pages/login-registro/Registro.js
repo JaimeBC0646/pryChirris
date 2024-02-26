@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
+import Image from 'next/image';
 
 
 export function FormRegistro() {
@@ -52,13 +54,13 @@ export function FormRegistro() {
         setMostrarPass(!mostrarPass);
     };
 
-    
+
     const [mostrarConfirmaPass, setMostrarConfirmaPass] = useState(false);
     const clickMostrarConfirmaPass = () => {
         setMostrarConfirmaPass(!mostrarConfirmaPass);
     };
 
-    
+
 
     const [formValido, setFormEstado] = useState(0);
 
@@ -116,7 +118,7 @@ export function FormRegistro() {
         try {
             if (usuario.txtUsuario) {
                 //console.log("txtU: " + usuario.txtUsuario)
-                const result = await axios.post('/api/login-registro?action=usuario', { txtUsuario: usuario.txtUsuario }); // Pasar el valor del campo txtUsuario
+                const result = await axios.post('/api/login-registro?action=usuarioR', { txtUsuario: usuario.txtUsuario }); // Pasar el valor del campo txtUsuario
                 //console.log(result.data);
 
                 //result && Object.keys(result).length > 0
@@ -140,55 +142,135 @@ export function FormRegistro() {
         }
 
 
-        /*Solo numeros en numero de telefono*/
+        /*Solo numeros en numero de telefono
         const regexNumeros = /^\d+$/;
         if (usuario.txtTelefono) {
             if (!regexNumeros.test(usuario.txtTelefono)) {
                 setMnsjTelefono("Solo numeros de telefono valido (10 digitos) ⚠");
                 setFormEstado(0);
-                setBtnEstado(true);
                 return;
             } else {
                 setMnsjTelefono("");
-                setFormEstado(1);
+                try {
+                    /* NumLookApi (Gasta peticiones)
+                    const apiKeyTelefono = "num_live_jGsgTjnWgHk75B0tp2kfz4pM3criXpBZ5VsAJzgh";
+                    const telefono = usuario.txtTelefono;
+                    const response = await axios.get("https://api.numlookupapi.com/v1/validate/+52"+telefono+"?apikey="+apiKeyTelefono);
+                    */
+
+                    /* AbstractApi (Gratis)
+                    const apiKeyTelefono = "59fa5c57b4f149ac8ab0ecdbe167c0e6";
+                    const telefono = usuario.txtTelefono;
+                    const response = await axios.get("https://phonevalidation.abstractapi.com/v1/?api_key="+apiKeyTelefono+"&phone=52"+telefono);
+
+
+                    console.log(response.data) //Array con datos de API
+                    //console.log(response.data.valid) //Accede al dato valid (para saber si el numero es real ¿?)
+                    
+                   
+                    const numReal =response.data.valid;
+                    if(!numReal){
+                        setMnsjTelefono("Introduzca un numero de telefono valido ⚠");
+                        setFormEstado(0);
+                        return;
+                    }
+                    else{
+                        setMnsjTelefono("");
+                        setFormEstado(1);
+                    }
+                    
+                } catch (error) {
+                    console.error('Error al validar el número de teléfono:', error);
+                    throw error;
+                }
             }
-        }
+        }*/
 
 
-        /* Correo distinto de los existentes en BD */
+        /* Correo distinto de los existentes en BD 
         try {
             if (usuario.txtCorreo) {
                 //console.log("txtC: " + usuario.txtCorreo)
-                const result = await axios.post('/api/login-registro?action=correo', { txtCorreo: usuario.txtCorreo }); // Pasar el valor del campo txtUsuario
+                const apiKeyCorreo = "a8e3bf7201ed4734b83c11f0b4017607";
+                const correo = usuario.txtCorreo;
+                const response = await axios.get("https://emailvalidation.abstractapi.com/v1/?api_key=" + apiKeyCorreo + "&email=" + correo);
+                //console.log("response Correo", response)
 
-                if (result.data == "no") {
-                    setMnsjCorreo("El correo ya posee a una cuenta existente");
+                if (response.data.deliverability === "DELIVERABLE" && response.data.is_smtp_valid.value === true) {
+                    //alert("Valido SI")
+                    const result = await axios.post('/api/login-registro?action=correo', { txtCorreo: usuario.txtCorreo }); // Pasar el valor del campo txtUsuario
+
+                    if (result.data == "no") {
+                        setMnsjCorreo("El correo ya posee a una cuenta existente ⚠");
+                        setFormEstado(0);
+                        return;
+                    }
+                    else {
+                        setMnsjCorreo("");
+                        setFormEstado(1);
+                    }
+                }
+                else {
+                    //alert("Invalido NO")
+                    setMnsjCorreo("Porfavor coloque un correo valido ⚠");
                     setFormEstado(0);
                     return;
                 }
-                else {
-                    setMnsjCorreo("");
-                    setFormEstado(1);
-                }
             }
-
         } catch (error) {
-            setMnsjUsuario("");
+            setMnsjCorreo("");
             setBtnEstado(false); // Habilita el botón si no se encuentra un usuario
             console.error("Error al buscar correo:", error);
         }
+        */
 
 
         /*Reglas de contraseña*/
-        const regexPassRule = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$\-+_*/':;!¡?¿]).{8,}$/;
+        try {
+            if (usuario.txtPassword) {
+                //console.log("txtC: " + usuario.txtCorreo)
+                const result = await axios.post('/api/login-registro?action=verificaPass', { txtPassword: usuario.txtPassword });
+                //console.log("result cliente: ",result)
+
+                if (result.data == "no") {
+                    setMnsjReglasPass("La contraseña es muy debil, introduzca otra respetando las reglas para contraseña ⚠");
+                    setFormEstado(0);
+                    return;
+                }
+                else{
+                    const regexPassRule = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$\-+_*/':;!¡?¿]).{8,}$/;
+                    if (!regexPassRule.test(usuario.txtPassword)) {
+                        setMnsjReglasPass("Reglas de Contraseña ⚠  \n● Minimo 8 caracteres ⓘ "
+                            + "\n● Al menos una letra mayúscula ⓘ "
+                            + "\n● Al menos una letra minucula ⓘ "
+                            + "\n● Al menos un dígito ⓘ "
+                            + "\n● No espacios en blanco ⓘ "
+                            + "\n● Al menos 1 caracter especial ⓘ ");
+                        setFormEstado(0);
+                        setBtnEstado(true);
+                        return;
+                    } else {
+                        setMnsjReglasPass("");
+                        setFormEstado(1);
+                    }
+                }
+
+            }
+        } catch (error) {
+            setMnsjCorreo("");
+            setBtnEstado(false); // Habilita el botón si no se encuentra un usuario
+            console.error("Error al buscar contraseña:", error);
+        }
+
+        /*
         if (usuario.txtPassword) {
             if (!regexPassRule.test(usuario.txtPassword)) {
-                setMnsjReglasPass("Reglas de Contraseña ⚠  ● Minimo 8 caracteres ⓘ \n"
-                    + "● Al menos una letra mayúscula ⓘ \n"
-                    + "● Al menos una letra minucula ⓘ \n"
-                    + "● Al menos un dígito ⓘ \n"
-                    + "● No espacios en blanco ⓘ \n"
-                    + "● Al menos 1 caracter especial ⓘ \n");
+                setMnsjReglasPass("Reglas de Contraseña ⚠  \n● Minimo 8 caracteres ⓘ "
+                    + "\n● Al menos una letra mayúscula ⓘ "
+                    + "\n● Al menos una letra minucula ⓘ "
+                    + "\n● Al menos un dígito ⓘ "
+                    + "\n● No espacios en blanco ⓘ "
+                    + "\n● Al menos 1 caracter especial ⓘ ");
                 setFormEstado(0);
                 setBtnEstado(true);
             } else {
@@ -196,7 +278,7 @@ export function FormRegistro() {
                 setFormEstado(1);
             }
         }
-
+*/
 
         /*Confirmacion de contraseña*/
         if ((usuario.txtConfirmaPassword && usuario.txtPassword) && (usuario.txtConfirmaPassword != usuario.txtPassword)) {
@@ -247,7 +329,7 @@ export function FormRegistro() {
 
 
         /*Seleccion de radioboton sexo*/
-        if (usuario.rdbTyC!="1") {
+        if (usuario.rdbTyC != "1") {
             setMnsjTyC("Debe aceptar nuestros terminos y condiciones para registrarse ⚠");
             setFormEstado(0);
             return;
@@ -265,18 +347,23 @@ export function FormRegistro() {
                 const result = await axios.post('/api/login-registro?action=registro', usuario);
 
                 if (result) {
-                    console.log(result);
-                    
-                    alert("Enviando codigo al correo...");
+                    console.log("idU: ", result.data[0][0].idUsuario);
+                    const idRU = result.data[0][0].idUsuario;
+
+                    //alert("Enviando codigo al correo...")
+
                     router.push({
                         //Ruta a donde redirecciona
                         pathname: './AltaRegistro',
                         //paso el id recuperado de la API
-                        query: { usuarioNuevo: usuario.txtUsuario }
+                        query: {id: idRU, usuarioNuevo: usuario.txtUsuario }
                     });
                 }
             }
             catch (error) {
+                if (error.response) {
+                    alert("no se puede")
+                }
                 //toast.error("Por favor no deje campos vacios y que correspondan al tipo de dato");
                 console.log("No se ha podido completar el registro");
                 console.error("Error registro:", error);
@@ -304,6 +391,11 @@ export function FormRegistro() {
         //console.log("Sexo: " + usuario.rdbSexo);
         //console.log("Token: "+token);
         //console.log("Value Pregunta: " +usuario.txtPreguntaSecreta);
+
+        const regexPassRule = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$\-+_*/':;!¡?¿]).{8,}$/;
+        if (regexPassRule.test(usuario.txtPassword)) {
+            setMnsjReglasPass("");
+        }
 
         /*Seleccion de pregunta secreta*/
         if (usuario.txtPreguntaSecreta != "0") {
@@ -391,7 +483,7 @@ export function FormRegistro() {
                             {mnsjReglasPass ? mnsjReglasPass : ""}
                         </label>
                         <input type={mostrarPass ? "text" : "password"} name="txtPassword" id="txtPassword" placeholder="Contraseña" minLength="8" onChange={handleChange} />
-                        <button type="button" onClick={clickMostrarPass} className="password-toggle-btn"> <img src={mostrarPass ? "/images/hidePass.png" : "/images/showPass.png"} /> </button>
+                        <button type="button" onClick={clickMostrarPass} className="password-toggle-btn"> <Image src={mostrarPass ? "/images/hidePass.png" : "/images/showPass.png"} alt="icoPass" width={100} height={100} /> </button>
 
 
 
@@ -400,7 +492,7 @@ export function FormRegistro() {
                             {mnsjConfirmaPass ? mnsjConfirmaPass : ""}
                         </label>
                         <input type={mostrarConfirmaPass ? "text" : "password"} name="txtConfirmaPassword" id="txtConfirmaPassword" placeholder="Confirmar contraseña" title="La contraseña debe ser igual al campo anterior" onChange={handleChange} />
-                        <button type="button" onClick={clickMostrarConfirmaPass} className="password-toggle-btn"> <img src={mostrarConfirmaPass ? "/images/hidePass.png" : "/images/showPass.png"} /> </button>
+                        <button type="button" onClick={clickMostrarConfirmaPass} className="password-toggle-btn"> <Image src={mostrarConfirmaPass ? "/images/hidePass.png" : "/images/showPass.png"} alt="icoPass" width={100} height={100} /> </button>
 
                         {/* Campo Sexo*/}
                         <label id="lblAdvertencias" style={{ visibility: mnsjSexo ? 'visible' : 'hidden' }}>
@@ -449,11 +541,11 @@ export function FormRegistro() {
                 </div>
 
 
-                
+
                 {/* Campo TyC*/}
                 <label id="lblAdvertencias" style={{ visibility: mnsjTyC ? 'visible' : 'hidden' }}>
-                            {mnsjTyC ? mnsjTyC : ""}
-                        </label>
+                    {mnsjTyC ? mnsjTyC : ""}
+                </label>
                 <div className="rdbOption">
                     <input type="radio" id="rdbTyC" name="rdbTyC" value="1" onChange={handleChange} />
                     <p>Al hacer clic en Registrarte, aceptas las Condiciones, la Política de privacidad y la Política de cookies.</p>
@@ -465,11 +557,11 @@ export function FormRegistro() {
             </form>
 
             <div className="homeLink">
-                <a href="./Login" className='aLogin'>Ya tienes cuenta? Iniciar sesión</a>
-                <a href="/">
-                    <img src="/images/homeIco.png" alt="homeIco" className="homeIco" />
+                <Link href="./Login" className='aLogin'>Ya tienes cuenta? Iniciar sesión</Link>
+                <Link href="/">
+                    <Image src="/images/homeIco.png" alt="homeIco" className="homeIco" width={100} height={100} />
                     Volver al Inicio
-                </a>
+                </Link>
             </div>
 
         </div>

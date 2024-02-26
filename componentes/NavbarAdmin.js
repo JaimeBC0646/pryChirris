@@ -1,3 +1,4 @@
+import Link from "next/link"
 
 export function NavbarAdmin() {
     return (
@@ -6,13 +7,13 @@ export function NavbarAdmin() {
             <nav className="navbarMain">
                 <div className="funcionesPublicas">
                     <div className="logoDiv">
-                        <a href="/"><img src="/images/logoChirris1.png" alt="logoChirris" className="logoChirris" /></a>
+                        <Link href="/"><img src="/images/logoChirris1.png" alt="logoChirris" className="logoChirris" /></Link>
                     </div>
                     <div className="enlaces">
-                        <a href="/admin">INICIO</a>
-                        <a href="/admin/gestionProductos">PRODUCTOS</a>
-                        <a href="/admin/gestionVentas">VENTAS</a>
-                        <a href="/admin/gestionEmpleados">EMPLEADOS</a>
+                        <Link href="/admin">INICIO</Link>
+                        <Link href="/admin/gestionProductos">PRODUCTOS</Link>
+                        <Link href="/admin/gestionVentas">VENTAS</Link>
+                        <Link href="/admin/gestionEmpleados">EMPLEADOS</Link>
 
                     </div>
                 </div>
@@ -21,8 +22,8 @@ export function NavbarAdmin() {
                 <h3>Sesion Activa : [usuario] (rol)</h3>
 
                     <div className="login-Registro">
-                        <a href="./perfil">Perfil</a>
-                        <a href="/">Cerrar Sesion</a>
+                        <Link href="./perfil">Perfil</Link>
+                        <Link href="/">Cerrar Sesion</Link>
                     </div>
                 </div>
 

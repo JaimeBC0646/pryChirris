@@ -1,4 +1,5 @@
 /*HOJA DE ESTILOS: cliente_Index.css */
+import Link from "next/link"
 export function NavbarEmpleado() {
     return (
 
@@ -6,14 +7,14 @@ export function NavbarEmpleado() {
             <nav className="navbarMain">
                 <div className="funcionesPublicas">
                     <div className="logoDiv">
-                        <a href="/"><img src="/images/logoChirris1.png" alt="logoChirris" className="logoChirris" /></a>
+                        <Link href="/"><img src="/images/logoChirris1.png" alt="logoChirris" className="logoChirris" /></Link>
                     </div>
                     <div className="enlaces">
-                        {/* <a href="/empleado">INICIO</a> */}
-                        <a href="/empleado/Ordenes">ORDENES EN ESPERA</a>
-                        <a href="/empleado/VentasDelDia">VENTAS DEL DIA</a>
-                        <a href="/empleado/Productos">PRODUCTOS</a>
-                        <a href="/empleado/Almacen">ALMACEN</a>
+                        {/* <Link href="/empleado">INICIO</Link> */}
+                        <Link href="/empleado/Ordenes">ORDENES EN ESPERA</Link>
+                        <Link href="/empleado/VentasDelDia">VENTAS DEL DIA</Link>
+                        <Link href="/empleado/Productos">PRODUCTOS</Link>
+                        <Link href="/empleado/Almacen">ALMACEN</Link>
                     </div>
                 </div>
 
@@ -21,8 +22,8 @@ export function NavbarEmpleado() {
                     <h3>Sesion Activa : [usuario] (rol)</h3>
 
                     <div className="login-Registro">
-                        <a href="./perfil">Perfil</a>
-                        <a href="/">Cerrar Sesion</a>
+                        <Link href="./perfil">Perfil</Link>
+                        <Link href="/">Cerrar Sesion</Link>
                     </div>
                 </div>
 

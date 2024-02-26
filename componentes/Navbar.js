@@ -1,3 +1,4 @@
+import Link from "next/link"
 
 export function Navbar() {
     return (
@@ -6,13 +7,13 @@ export function Navbar() {
             <nav className="navbarMain">
                 <div className="funcionesPublicas">
                     <div className="logoDiv">
-                        <a href="/"><img src="/images/logoChirris1.png" alt="logoChirris" className="logoChirris" /></a>
+                        <Link href="/"><img src="/images/logoChirris1.png" alt="logoChirris" className="logoChirris" /></Link>
                     </div>
                     <div className="enlaces">
-                        <a href="/">INICIO</a>
-                        <a href="/Listado">PRODUCTOS</a>
-                        <a href="/promos">PROMOCIONES</a>
-                        <a href="/ayuda">AYUDA</a>
+                        <Link href="/">INICIO</Link>
+                        <Link href="/Listado">PRODUCTOS</Link>
+                        <Link href="/promos">PROMOCIONES</Link>
+                        <Link href="/ayuda">AYUDA</Link>
 
                     </div>
                 </div>
@@ -21,8 +22,8 @@ export function Navbar() {
                     <h3>¡Disfruta de la experiencia que comparte Chirris House!</h3>
 
                     <div className="login-Registro">
-                        <a href="/login-registro/Login">Iniciar Sesión</a>
-                        <a href="/login-registro/Registro">Crear cuenta</a>
+                        <Link href="/login-registro/Login">Iniciar Sesión</Link>
+                        <Link href="/login-registro/Registro">Crear cuenta</Link>
                     </div>
                 </div>
 

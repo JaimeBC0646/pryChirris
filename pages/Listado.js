@@ -2,6 +2,7 @@ import axios from 'axios';
 import { Layout } from '@/componentes/Layout';
 import Link from 'next/link';
 import { Navbar } from '@/componentes/Navbar';
+import Image from 'next/image';
 
 function Listado({ productos }) {
   return (
@@ -13,7 +14,7 @@ function Listado({ productos }) {
             <div className="product">
 
               <div className="imgProduct">
-                <img src={`/images/productos/${producto.vchImage}`} alt="imgTest" />
+                <Image src={`/images/productos/${producto.vchImage}`} alt="imgTest" width={100} height={100} />
               </div>
 
               <div className="namePrice_Product">
