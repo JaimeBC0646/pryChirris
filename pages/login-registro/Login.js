@@ -2,12 +2,12 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import ReCAPTCHA from "react-google-recaptcha";
-import { siteKey } from './keyCaptcha';
+import KeyCaptchaPage from './keyCaptcha';
 import Link from 'next/link';
 import Image from 'next/image';
 import { APP_CLIENT_INTERNALS } from 'next/dist/shared/lib/constants';
 
-
+const siteKey = KeyCaptchaPage();
 
 function FormLogin() {
     // ENRUTADOR PARA REDIRIGIR

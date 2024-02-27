@@ -9,7 +9,7 @@ function Listado({ productos }) {
     <Layout>
       <Navbar />
       {productos.map(producto => (
-        <div className='contentMenu'>
+        <div key={producto.id} className='contentMenu'>
           <div className="productCard">
             <div className="product">
 

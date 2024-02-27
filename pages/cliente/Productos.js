@@ -2,6 +2,7 @@
 import axios from 'axios';
 import { Layout } from '@/componentes/Layout';
 import Link from 'next/link';
+import Image from 'next/image';
 import { NavbarCliente } from '@/componentes/NavbarCliente';
 
 function Listado({ productos }) {
@@ -9,12 +10,12 @@ function Listado({ productos }) {
     <Layout>
       <NavbarCliente />
       {productos.map(producto => (
-        <div className='contentMenu'>
+        <div key={producto.id} className='contentMenu'>
           <div className="productCard">
             <div className="product">
 
               <div className="imgProduct">
-                <img src={`/images/productos/${producto.vchImage}`} alt="imgTest" />
+                <Image src={`/images/productos/${producto.vchImage}`} alt="imgTest" />
               </div>
 
               <div className="namePrice_Product">
