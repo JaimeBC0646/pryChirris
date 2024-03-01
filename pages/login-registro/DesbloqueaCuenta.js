@@ -68,7 +68,7 @@ export function DesbloqueaCuenta() {
             <div className="divContentBox">
                 <h2>DESBLOQUEO DE LA CUENTA</h2>
 
-                <Image src="/images/lockIcon.png" id="frmRecuperaContra" className="lockIcon" alt="userImg" width={100} height={100} />
+                <Image src="/images/icos/lock.png" id="frmRecuperaContra" className="lockIcon" alt="userImg" width={100} height={100} />
 
                 <div className="recuperaContraForm">
                     <div className="divMessage">

@@ -68,7 +68,7 @@ export function RecuperarContrasena() {
         <div className="titleMod">
             <h1>VALIDACION DE REGISTRO</h1>
 
-            <Image src="/images/lockIcon.png" id="frmRecuperaContra" className="lockIcon" alt="userImg" width={100} height={100} />
+            <Image src="/images/icos/lock.png" id="frmRecuperaContra" className="lockIcon" alt="userImg" width={100} height={100} />
 
             <div className="recuperaContraForm">
                 <div className="divMessage">
@@ -95,7 +95,7 @@ export function RecuperarContrasena() {
                 {/*
                 <div className="homeLink">
                     <Link href="/">
-                        <Image src="/images/homeIco.png" alt="homeIco" className="homeIco" />
+                        <Image src="/images/icos/home.png" alt="homeIco" className="homeIco" />
                         Volver al Inicio
                     </Link>
                 </div>

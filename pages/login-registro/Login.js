@@ -186,7 +186,7 @@ function FormLogin() {
 
                         <div className="divPassL">
                             <input type={mostrarPass ? "text" : "password"} name="txtPassword" id="txtPassword" placeholder="Contraseña" title="Contraseña" onChange={handleChange} />
-                            <Image onClick={clickMostrarPass} src={mostrarPass ? "/images/hidePass.png" : "/images/showPass.png"} alt="icoPass" width={100} height={100} />
+                            <Image onClick={clickMostrarPass} src={mostrarPass ? "/images/icos/hidePass.png" : "/images/icos/showPass.png"} alt="icoPass" width={100} height={100} />
                         </div>
 
                         <label htmlFor="lblCampos" id="lblCampos" style={{ visibility: mnsjCaptcha ? 'visible' : 'hidden' }}>
@@ -207,7 +207,7 @@ function FormLogin() {
 
                         <Link href="/">
                             <div>
-                                <Image src="/images/homeIco.png" alt="homeIco" className="homeIco" width={100} height={100} />
+                                <Image src="/images/icos/home.png" alt="homeIco" className="homeIco" width={100} height={100} />
                                 Volver al Inicio
                             </div>
                         </Link>

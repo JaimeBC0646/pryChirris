@@ -97,7 +97,7 @@ export function RecuperarCuenta() {
             <div className="divContentBox">
                 <h2>RECUPERACIÓN DE CUENTA</h2>
 
-                <Image src="/images/lockIcon.png" id="frmRecuperaContra" className="lockIcon" alt="userImg" width={100} height={100} />
+                <Image src="/images/icos/lock.png" id="frmRecuperaContra" className="lockIcon" alt="userImg" width={100} height={100} />
 
                 <div>
                     <label htmlFor="lblCampos" id="lblCampos" style={{ visibility: mnsjCampos ? 'visible' : 'hidden' }}>
@@ -125,7 +125,7 @@ export function RecuperarCuenta() {
 
                     <div className="homeLink">
                         <Link href="/">
-                            <Image src="/images/homeIco.png" alt="homeIco" className="homeIco" width={100} height={100} />
+                            <Image src="/images/icos/home.png" alt="homeIco" className="homeIco" width={100} height={100} />
                             Volver al Inicio
                         </Link>
                     </div>

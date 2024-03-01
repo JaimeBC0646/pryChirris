@@ -488,7 +488,7 @@ export function FormRegistro() {
 
                             <div className="divPassR">
                                 <input type={mostrarPass ? "text" : "password"} name="txtPassword" id="txtPassword" placeholder="Contraseña" title="Contraseña" onChange={handleChange} />
-                                <Image onClick={clickMostrarPass} src={mostrarPass ? "/images/hidePass.png" : "/images/showPass.png"} alt="icoPass" width={100} height={100} />
+                                <Image onClick={clickMostrarPass} src={mostrarPass ? "/images/icos/hidePass.png" : "/images/icos/showPass.png"} alt="icoPass" width={100} height={100} />
                             </div>
 
 
@@ -500,7 +500,7 @@ export function FormRegistro() {
 
                             <div className="divPassR">
                                 <input type={mostrarConfirmaPass ? "text" : "password"} name="txtConfirmaPassword" id="txtConfirmaPassword" placeholder="Confirmar contraseña" title="La contraseña debe ser igual al campo anterior" onChange={handleChange} />
-                                <Image onClick={clickMostrarConfirmaPass} src={mostrarConfirmaPass ? "/images/hidePass.png" : "/images/showPass.png"} alt="icoPass" width={100} height={100} />
+                                <Image onClick={clickMostrarConfirmaPass} src={mostrarConfirmaPass ? "/images/icos/hidePass.png" : "/images/icos/showPass.png"} alt="icoPass" width={100} height={100} />
                             </div>
 
 
@@ -572,7 +572,7 @@ export function FormRegistro() {
                     <Link href="./Login" className='aLogin'>Ya tienes cuenta? Iniciar sesión</Link>
                     <Link href="/">
                         <div>
-                            <Image src="/images/homeIco.png" alt="homeIco" className="homeIco" width={100} height={100} />
+                            <Image src="/images/icos/home.png" alt="homeIco" className="homeIco" width={100} height={100} />
                             Volver al Inicio
                         </div>
                     </Link>

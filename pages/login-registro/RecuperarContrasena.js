@@ -128,7 +128,7 @@ export function RecuperarContrasena() {
                     <div className="homeLink">
                         <Link href="/">
                             <div>
-                                <Image src="/images/homeIco.png" alt="homeIco" className="homeIco" width={100} height={100} />
+                                <Image src="/images/icos/home.png" alt="homeIco" className="homeIco" width={100} height={100} />
                                 Volver al Inicio
                             </div>
                         </Link>
