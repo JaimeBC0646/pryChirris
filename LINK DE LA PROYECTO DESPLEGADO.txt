@@ -1,0 +1,10 @@
+PROYECTO DESPLEGADO EN VERCEL, DESDE UN REPOSITORIO EN GITHUB
+
+Vercel:
+https://pry-chirris-q8rija7y8-jaimes-projects-f307c57e.vercel.app/
+
+
+Repositorio de Github:
+https://github.com/JaimeBC0646/pryChirris
+
+
