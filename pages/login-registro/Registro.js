@@ -142,7 +142,8 @@ export function FormRegistro() {
         }
 
 
-        /*Solo numeros en numero de telefono
+        //Si esta comentado, es para no gastar peticiones
+        /*Solo numeros en numero de telefono*/
         const regexNumeros = /^\d+$/;
         if (usuario.txtTelefono) {
             if (!regexNumeros.test(usuario.txtTelefono)) {
@@ -152,42 +153,44 @@ export function FormRegistro() {
             } else {
                 setMnsjTelefono("");
                 try {
-                    /* NumLookApi (Gasta peticiones)
-                    const apiKeyTelefono = "num_live_jGsgTjnWgHk75B0tp2kfz4pM3criXpBZ5VsAJzgh";
-                    const telefono = usuario.txtTelefono;
-                    const response = await axios.get("https://api.numlookupapi.com/v1/validate/+52"+telefono+"?apikey="+apiKeyTelefono);
-                    */
+                    //NumLookApi (Gasta peticiones)
+                    //const apiKeyTelefono = "num_live_jGsgTjnWgHk75B0tp2kfz4pM3criXpBZ5VsAJzgh";
+                    //const telefono = usuario.txtTelefono;
+                    //const response = await axios.get("https://api.numlookupapi.com/v1/validate/+52"+telefono+"?apikey="+apiKeyTelefono);
+                    
 
-                    /* AbstractApi (Gratis)
+                    //AbstractApi (Gratis)
                     const apiKeyTelefono = "59fa5c57b4f149ac8ab0ecdbe167c0e6";
                     const telefono = usuario.txtTelefono;
-                    const response = await axios.get("https://phonevalidation.abstractapi.com/v1/?api_key="+apiKeyTelefono+"&phone=52"+telefono);
+                    const response = await axios.get("https://phonevalidation.abstractapi.com/v1/?api_key=" + apiKeyTelefono + "&phone=52" + telefono);
 
 
                     console.log(response.data) //Array con datos de API
                     //console.log(response.data.valid) //Accede al dato valid (para saber si el numero es real ¿?)
-                    
-                   
-                    const numReal =response.data.valid;
-                    if(!numReal){
+
+
+                    const numReal = response.data.valid;
+                    if (!numReal) {
                         setMnsjTelefono("Introduzca un numero de telefono valido ⚠");
                         setFormEstado(0);
                         return;
                     }
-                    else{
+                    else {
                         setMnsjTelefono("");
                         setFormEstado(1);
                     }
-                    
+
                 } catch (error) {
                     console.error('Error al validar el número de teléfono:', error);
                     throw error;
                 }
             }
-        }*/
+        }
+        
 
 
-        /* Correo distinto de los existentes en BD 
+        /*Si esta comentado, es para no gastar peticiones*/
+        /* Correo distinto de los existentes en BD */
         try {
             if (usuario.txtCorreo) {
                 //console.log("txtC: " + usuario.txtCorreo)
@@ -222,7 +225,7 @@ export function FormRegistro() {
             setBtnEstado(false); // Habilita el botón si no se encuentra un usuario
             console.error("Error al buscar correo:", error);
         }
-        */
+        
 
 
         /*Reglas de contraseña*/
@@ -237,10 +240,10 @@ export function FormRegistro() {
                     setFormEstado(0);
                     return;
                 }
-                else{
+                else {
                     const regexPassRule = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$\-+_*/':;!¡?¿]).{8,}$/;
                     if (!regexPassRule.test(usuario.txtPassword)) {
-                        setMnsjReglasPass("Reglas de Contraseña ⚠  \n● Minimo 8 caracteres ⓘ "
+                        setMnsjReglasPass("Reglas de Contraseña ⚠  <br></br>● Minimo 8 caracteres ⓘ "
                             + "\n● Al menos una letra mayúscula ⓘ "
                             + "\n● Al menos una letra minucula ⓘ "
                             + "\n● Al menos un dígito ⓘ "
@@ -356,7 +359,7 @@ export function FormRegistro() {
                         //Ruta a donde redirecciona
                         pathname: './AltaRegistro',
                         //paso el id recuperado de la API
-                        query: {id: idRU, usuarioNuevo: usuario.txtUsuario }
+                        query: { id: idRU, usuarioNuevo: usuario.txtUsuario }
                     });
                 }
             }
@@ -414,154 +417,166 @@ export function FormRegistro() {
 
     return (
         <div className="titleMod">
-            <h1>REGISTRO</h1>
+            <div className="divContentFrmR">
+                <h2>REGISTRO</h2>
+                <form onSubmit={handleSubmit} className="frmRegistro">
+                    {/* Campos Vacios */}
+                    <label htmlFor="lblCampos" id="lblCampos" style={{ visibility: mnsjCampos ? 'visible' : 'hidden' }}>
+                        {mnsjCampos ? mnsjCampos : ""}
+                    </label>
 
-            <form onSubmit={handleSubmit} className="frmRegistro">
-                {/* Campos Vacios */}
-                <label htmlFor="lblCampos" id="lblCampos" style={{ visibility: mnsjCampos ? 'visible' : 'hidden' }}>
-                    {mnsjCampos ? mnsjCampos : ""}
-                </label>
+                    <div className="divForm">
+                        <div className="formInputs">
 
-                <div className="divForm">
-                    <div className="formInputs">
-
-                        {/* Campo Nombre */}
-                        <label id="lblAdvertencias" style={{ visibility: mnsjNombre ? 'visible' : 'hidden' }}>
-                            {mnsjNombre ? mnsjNombre : ""}
-                        </label>
-                        <input type="text" name="txtNombre" id="txtNombre" placeholder="Nombre (s)" minLength="3" onChange={handleChange} />
-
-
-
-                        {/* Campo Apepat */}
-                        <label id="lblAdvertencias"> </label>
-                        <input type="text" name="txtApepat" id="txtApepat" placeholder="Apellido Paterno" onChange={handleChange} />
+                            {/* Campo Nombre */}
+                            <label id="lblAdvertencias" style={{ visibility: mnsjNombre ? 'visible' : 'hidden' }}>
+                                {mnsjNombre ? mnsjNombre : ""}
+                            </label>
+                            <input type="text" name="txtNombre" id="txtNombre" placeholder="Nombre (s)" minLength="3" onChange={handleChange} />
 
 
 
-                        {/* Campo Apemat */}
-                        <label id="lblAdvertencias"> </label>
-                        <input type="text" name="txtApemat" id="txtApemat" placeholder="Apellido Materno" onChange={handleChange} />
-
-
-                        {/* Campo Fecha de nacimiento */}
-                        <label id="lblAdvertencias" style={{ visibility: mnsjFechaNacimiento ? 'visible' : 'hidden' }}>
-                            {mnsjFechaNacimiento ? mnsjFechaNacimiento : ""}
-                        </label>
-                        <input type="date" name="txtFechaNacimiento" id="txtFechaNacimiento" onChange={handleChange} />
+                            {/* Campo Apepat */}
+                            <label id="lblAdvertencias"> </label>
+                            <input type="text" name="txtApepat" id="txtApepat" placeholder="Apellido Paterno" onChange={handleChange} />
 
 
 
-                        {/* Campo Usuario */}
-                        <label id="lblAdvertencias" style={{ visibility: mnsjUsuario ? 'visible' : 'hidden' }}>
-                            {mnsjUsuario ? mnsjUsuario : ""}
-                        </label>
-                        <input type="text" name="txtUsuario" id="txtUsuario" placeholder="Nombre de Usuario" minLength="5" onChange={handleChange} />
+                            {/* Campo Apemat */}
+                            <label id="lblAdvertencias"> </label>
+                            <input type="text" name="txtApemat" id="txtApemat" placeholder="Apellido Materno" onChange={handleChange} />
+
+
+                            {/* Campo Fecha de nacimiento */}
+                            <label id="lblAdvertencias" style={{ visibility: mnsjFechaNacimiento ? 'visible' : 'hidden' }}>
+                                {mnsjFechaNacimiento ? mnsjFechaNacimiento : ""}
+                            </label>
+                            <input type="date" name="txtFechaNacimiento" id="txtFechaNacimiento" onChange={handleChange} />
 
 
 
-                        {/* Campo Telefono */}
-                        <label id="lblAdvertencias" style={{ visibility: mnsjTelefono ? 'visible' : 'hidden' }}>
-                            {mnsjTelefono ? mnsjTelefono : ""}
-                        </label>
-                        <input type="text" name="txtTelefono" id="txtTelefono" placeholder="No. de Telefono" minLength="10" maxLength="10" onChange={handleChange} />
-
-                    </div>
-
-                    <div className="formInputs">
-
-                        {/* Campo Correo */}
-                        <label id="lblAdvertencias" style={{ visibility: mnsjCorreo ? 'visible' : 'hidden' }}>
-                            {mnsjCorreo ? mnsjCorreo : ""}
-                        </label>
-                        <input type="email" name="txtCorreo" id="txtCorreo" placeholder="Correo" onChange={handleChange} />
+                            {/* Campo Usuario */}
+                            <label id="lblAdvertencias" style={{ visibility: mnsjUsuario ? 'visible' : 'hidden' }}>
+                                {mnsjUsuario ? mnsjUsuario : ""}
+                            </label>
+                            <input type="text" name="txtUsuario" id="txtUsuario" placeholder="Nombre de Usuario" minLength="5" onChange={handleChange} />
 
 
 
-                        {/* Campo Contraseña*/}
-                        <label id="lblAdvertencias" style={{ visibility: mnsjReglasPass ? 'visible' : 'hidden' }}>
-                            {mnsjReglasPass ? mnsjReglasPass : ""}
-                        </label>
-                        <input type={mostrarPass ? "text" : "password"} name="txtPassword" id="txtPassword" placeholder="Contraseña" minLength="8" onChange={handleChange} />
-                        <button type="button" onClick={clickMostrarPass} className="password-toggle-btn"> <Image src={mostrarPass ? "/images/hidePass.png" : "/images/showPass.png"} alt="icoPass" width={100} height={100} /> </button>
+                            {/* Campo Telefono */}
+                            <label id="lblAdvertencias" style={{ visibility: mnsjTelefono ? 'visible' : 'hidden' }}>
+                                {mnsjTelefono ? mnsjTelefono : ""}
+                            </label>
+                            <input type="text" name="txtTelefono" id="txtTelefono" placeholder="No. de Telefono" minLength="10" maxLength="10" onChange={handleChange} />
 
-
-
-                        {/* Campo Confimra Contraseña*/}
-                        <label id="lblAdvertencias" style={{ visibility: mnsjConfirmaPass ? 'visible' : 'hidden' }}>
-                            {mnsjConfirmaPass ? mnsjConfirmaPass : ""}
-                        </label>
-                        <input type={mostrarConfirmaPass ? "text" : "password"} name="txtConfirmaPassword" id="txtConfirmaPassword" placeholder="Confirmar contraseña" title="La contraseña debe ser igual al campo anterior" onChange={handleChange} />
-                        <button type="button" onClick={clickMostrarConfirmaPass} className="password-toggle-btn"> <Image src={mostrarConfirmaPass ? "/images/hidePass.png" : "/images/showPass.png"} alt="icoPass" width={100} height={100} /> </button>
-
-                        {/* Campo Sexo*/}
-                        <label id="lblAdvertencias" style={{ visibility: mnsjSexo ? 'visible' : 'hidden' }}>
-                            {mnsjSexo ? mnsjSexo : ""}
-                        </label>
-                        <div className="divSexSelect">
-                            <div className="rdbOption">
-                                <input type="radio" id="rdbHombre" name="rdbSexo" value="h" onChange={handleChange} />
-                                <label className="rdb">Hombre</label>
-                            </div>
-
-                            <div className="rdbOption">
-                                <input type="radio" id="rdbMujer" name="rdbSexo" value="m" onChange={handleChange} />
-                                <label className="rdb">Mujer</label>
-                            </div>
-
-                            <div className="rdbOption">
-                                <input type="radio" id="rdbOtro" name="rdbSexo" value="o" onChange={handleChange} />
-                                <label className="rdb">Otro</label>
-                            </div>
                         </div>
 
+                        <div className="formInputs">
 
-
-                        {/* Campo Pregunta secreta */}
-                        <label id="lblAdvertencias" style={{ visibility: mnsjPregunta ? 'visible' : 'hidden' }}>
-                            {mnsjPregunta ? mnsjPregunta : ""}
-                        </label>
-                        <select name="txtPreguntaSecreta" id="txtPreguntaSecreta" onChange={handleChange} >
-                            <option value="0">--| Seleccione una pregunta |--</option>
-                            <option value="1">¿Cual es tu color favorito?</option>
-                            <option value="2">¿Cual es tu comida favorita?</option>
-                            <option value="3">¿Cual es el nombre de mascota?</option>
-                        </select>
+                            {/* Campo Correo */}
+                            <label id="lblAdvertencias" style={{ visibility: mnsjCorreo ? 'visible' : 'hidden' }}>
+                                {mnsjCorreo ? mnsjCorreo : ""}
+                            </label>
+                            <input type="email" name="txtCorreo" id="txtCorreo" placeholder="Correo" onChange={handleChange} />
 
 
 
-                        {/* Campo Respuesta secreta */}
-                        <label id="lblAdvertencias" style={{ visibility: mnsjRespuesta ? 'visible' : 'hidden' }}>
-                            {mnsjRespuesta ? mnsjRespuesta : ""}
-                        </label>
-                        <input type="varchar" name="txtRespuestaSecreta" id="txtRespuestaSecreta" placeholder="Respuesta secreta" onChange={handleChange} disabled={estadoPregunta} />
+                            {/* Campo Contraseña*/}
+                            <label id="lblAdvertencias" style={{ visibility: mnsjReglasPass ? 'visible' : 'hidden' }}>
+                                {mnsjReglasPass ? mnsjReglasPass : ""}
+                            </label>
+
+                            <div className="divPassR">
+                                <input type={mostrarPass ? "text" : "password"} name="txtPassword" id="txtPassword" placeholder="Contraseña" title="Contraseña" onChange={handleChange} />
+                                <Image onClick={clickMostrarPass} src={mostrarPass ? "/images/hidePass.png" : "/images/showPass.png"} alt="icoPass" width={100} height={100} />
+                            </div>
 
 
+
+                            {/* Campo Confimra Contraseña*/}
+                            <label id="lblAdvertencias" style={{ visibility: mnsjConfirmaPass ? 'visible' : 'hidden' }}>
+                                {mnsjConfirmaPass ? mnsjConfirmaPass : ""}
+                            </label>
+
+                            <div className="divPassR">
+                                <input type={mostrarConfirmaPass ? "text" : "password"} name="txtConfirmaPassword" id="txtConfirmaPassword" placeholder="Confirmar contraseña" title="La contraseña debe ser igual al campo anterior" onChange={handleChange} />
+                                <Image onClick={clickMostrarConfirmaPass} src={mostrarConfirmaPass ? "/images/hidePass.png" : "/images/showPass.png"} alt="icoPass" width={100} height={100} />
+                            </div>
+
+
+
+                            {/* Campo Sexo*/}
+                            <label id="lblAdvertencias" style={{ visibility: mnsjSexo ? 'visible' : 'hidden' }}>
+                                {mnsjSexo ? mnsjSexo : ""}
+                            </label>
+                            <div className="divSexRdb">
+                                <div className="rdbOption">
+                                    <input type="radio" id="rdbHombre" name="rdbSexo" value="h" onChange={handleChange} />
+                                    <label>Hombre</label>
+                                </div>
+
+                                <div className="rdbOption">
+                                    <input type="radio" id="rdbMujer" name="rdbSexo" value="m" onChange={handleChange} />
+                                    <label>Mujer</label>
+                                </div>
+
+                                <div className="rdbOption">
+                                    <input type="radio" id="rdbOtro" name="rdbSexo" value="o" onChange={handleChange} />
+                                    <label>Prefiero no decir</label>
+                                </div>
+                            </div>
+
+
+
+                            {/* Campo Pregunta secreta */}
+                            <label id="lblAdvertencias" style={{ visibility: mnsjPregunta ? 'visible' : 'hidden' }}>
+                                {mnsjPregunta ? mnsjPregunta : ""}
+                            </label>
+                            <select name="txtPreguntaSecreta" id="txtPreguntaSecreta" onChange={handleChange} >
+                                <option value="0">-- Seleccione una pregunta --</option>
+                                <option value="1">¿Cual es tu color favorito?</option>
+                                <option value="2">¿Cual es tu comida favorita?</option>
+                                <option value="3">¿Cual es el nombre de mascota?</option>
+                            </select>
+
+
+
+                            {/* Campo Respuesta secreta */}
+                            <label id="lblAdvertencias" style={{ visibility: mnsjRespuesta ? 'visible' : 'hidden' }}>
+                                {mnsjRespuesta ? mnsjRespuesta : ""}
+                            </label>
+                            <input type="varchar" name="txtRespuestaSecreta" id="txtRespuestaSecreta" placeholder="Respuesta secreta" onChange={handleChange} disabled={estadoPregunta} />
+
+
+                        </div>
                     </div>
+
+
+
+                    {/* Campo TyC*/}
+                    <label id="lblAdvertencias" style={{ visibility: mnsjTyC ? 'visible' : 'hidden' }}>
+                        {mnsjTyC ? mnsjTyC : ""}
+                    </label>
+
+                    <div className="divTyC">
+                        <input type="radio" id="rdbTyC" name="rdbTyC" value="1" onChange={handleChange} />
+                        <p>Al confirmar, aceptas las Condiciones, la Política de privacidad y la Política de cookies.</p>
+                    </div>
+
+                    <button type="submit" id="btnRegistro" >REGISTRARSE</button>
+                    {/*disabled={btnEstado} */}
+
+                </form>
+
+                <div className="homeLink">
+                    <Link href="./Login" className='aLogin'>Ya tienes cuenta? Iniciar sesión</Link>
+                    <Link href="/">
+                        <div>
+                            <Image src="/images/homeIco.png" alt="homeIco" className="homeIco" width={100} height={100} />
+                            Volver al Inicio
+                        </div>
+                    </Link>
                 </div>
-
-
-
-                {/* Campo TyC*/}
-                <label id="lblAdvertencias" style={{ visibility: mnsjTyC ? 'visible' : 'hidden' }}>
-                    {mnsjTyC ? mnsjTyC : ""}
-                </label>
-                <div className="rdbOption">
-                    <input type="radio" id="rdbTyC" name="rdbTyC" value="1" onChange={handleChange} />
-                    <p>Al hacer clic en Registrarte, aceptas las Condiciones, la Política de privacidad y la Política de cookies.</p>
-                </div>
-
-                <button type="submit" id="btnRegistro" >REGISTRARSE</button>
-                {/*disabled={btnEstado} */}
-
-            </form>
-
-            <div className="homeLink">
-                <Link href="./Login" className='aLogin'>Ya tienes cuenta? Iniciar sesión</Link>
-                <Link href="/">
-                    <Image src="/images/homeIco.png" alt="homeIco" className="homeIco" width={100} height={100} />
-                    Volver al Inicio
-                </Link>
             </div>
 
         </div>

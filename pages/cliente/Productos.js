@@ -15,7 +15,7 @@ function Listado({ productos }) {
             <div className="product">
 
               <div className="imgProduct">
-                <Image src={`/images/productos/${producto.vchImage}`} alt="imgTest" />
+                <Image src={`/images/productos/${producto.vchImage}`} alt="imgTest" width={100} height={100}/>
               </div>
 
               <div className="namePrice_Product">

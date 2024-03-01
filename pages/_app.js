@@ -3,22 +3,23 @@
 
 
 /* ---| ESTILOS DE VISTAS |--- */
-import "@/styles/globals.css";
+
+//import "@/styles/globals.css";
 //import '../styles/banner.css'
 
 // --- Publico --- //
-import '../styles/navbar.css'
+import '../styles/inicio.css'
 import '../styles/login.css'
-
-import '../styles/email.css'
-
 import '../styles/registro.css'
-import '../styles/recuperarContrasena.css'
-import '../styles/digitalMenu.css'
+import '../styles/navbar.css'
+import '../styles/recovery-unlock.css'
 
 // --- Cliente --- //
-import '../styles/estilosCliente/cliente_Index.css'
+//import '../styles/estilosCliente/cliente_Index.css'
 
+
+
+/*import '../styles/NavbarJADE.css'*/
 
 
 export default function App({ Component, pageProps }) {

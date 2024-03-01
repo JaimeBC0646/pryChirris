@@ -1,34 +1,47 @@
-/*HOJA DE ESTILOS: cliente_Index.css */
+/*HOJA DE ESTILOS: navbar.css */
 import Link from "next/link"
+import { useState } from "react";
+import Image from "next/image"
+
 export function NavbarEmpleado() {
+    const [showDropdown, setShowDropdown] = useState(false);
+
+    const toggleDropdown = () => {
+        setShowDropdown(!showDropdown);
+    };
     return (
-
-        <div>
-            <nav className="navbarMain">
-                <div className="funcionesPublicas">
-                    <div className="logoDiv">
-                        <Link href="/"><img src="/images/logoChirris1.png" alt="logoChirris" className="logoChirris" /></Link>
+        <nav className="navbarMain">
+            <ul className="contentNavbar">
+                <div className="login-Registro">
+                    <Link href="#">INICIO</Link>
+                </div>
+                <li>
+                    <div onClick={toggleDropdown} className="dropdown-toggle">
+                        GESTIONAR
+                        {showDropdown && (
+                            <ul className="dropdown-menu">
+                                <li><Link href="/empleado/Productos">PRODUCTOS</Link></li>
+                                <li><Link href="/empleado/Almacen">ALMACEN</Link></li>
+                            </ul>
+                        )}
                     </div>
-                    <div className="enlaces">
-                        {/* <Link href="/empleado">INICIO</Link> */}
-                        <Link href="/empleado/Ordenes">ORDENES EN ESPERA</Link>
-                        <Link href="/empleado/VentasDelDia">VENTAS DEL DIA</Link>
-                        <Link href="/empleado/Productos">PRODUCTOS</Link>
-                        <Link href="/empleado/Almacen">ALMACEN</Link>
-                    </div>
+                </li>
+                <div className="login-Registro">
+                    <li><Link href="/empleado/Ordenes">ORDENES EN ESPERA</Link></li>
+                    <li><Link href="/empleado/VentasDelDia">VENTAS DEL DIA</Link></li>
                 </div>
 
-                <div className="funcionesUsuario">
-                    <h3>Sesion Activa : [usuario] (rol)</h3>
+            </ul>
 
-                    <div className="login-Registro">
-                        <Link href="./perfil">Perfil</Link>
-                        <Link href="/">Cerrar Sesion</Link>
-                    </div>
+            <div className="funcionesUsuario">
+                <h3>Sesion Activa : [usuario] (rol)</h3>
+
+                <div className="divFunciones">
+                    <Link href="./perfil"><Image src={"/images/icos/perfil.png"} title="Perfil" width={100} height={100} /></Link>
+                    <Link href="/"><Image src={"/images/icos/cerrarSesion.png"} title="Cerrar Sesion" width={100} height={100} /></Link>
                 </div>
+            </div>
 
-            </nav>
-        </div>
-
+        </nav>
     )
 }

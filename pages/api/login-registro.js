@@ -604,7 +604,7 @@ const recuperaCuenta = async (req, res) => {
                     
                     
                     const id = resultCuenta[0][0].idUsuario //Obtenme el ID del registro realizado
-                    const min = 30000; //Tiempo de espera (5min) para que expire el codigo (se elimine el registro)
+                    const min = 300000; //Tiempo de espera (5min) para que expire el codigo (se elimine el registro)
                     //(30 segundos) -> 30000
                     //(5 minutos)   -> 300000
     

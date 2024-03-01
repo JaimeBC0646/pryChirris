@@ -1,26 +1,34 @@
-
-.registerForm{
+.divContentFrmR{
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content:flex-start;
-    width: 50%;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    /*border: white solid;*/
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    /*background: #bb693d;*/
+    background-color: #f0eae7;
+    padding-top: 2rem;
+    border-radius: 2rem;
+    border: rgb(0, 0, 0) solid;
 }
 
-.registerForm p{
-    font-size: 15px;
+
+.frmRegistro{
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
 }
+
 
 .divForm{
     width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    /*border: solid red;*/
+    border-radius: 2rem;
+    /*border: rgb(226, 99, 14) solid;*/
 }
+
 
 .formInputs{
     display: flex;
@@ -32,7 +40,6 @@
     margin-bottom: 1rem;
     /*border: rgb(40, 216, 24) solid;*/
 }
-
 .formInputs input{
     width: 85%;
     border: solid 3px black;
@@ -46,9 +53,9 @@
     padding-right: 1rem;
     /*font-family:'Buxton Sketch';*/
 }
-
 .formInputs select{
-    width: 95%;
+    width: 85%;
+    height: auto;
     border: solid 3px black;
     border-radius: 10px;
     padding-top: 0.5rem;
@@ -61,26 +68,58 @@
     /*font-family:'Buxton Sketch';*/
 }
 
-.divSexSelect{
-    width: 90%;
+
+.divPassR{
+    width: 85%;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
-    /*border: red solid;*/
+    justify-content: center;
+    align-items: center;
+    /*border: solid rgb(216, 74, 23);*/
+}
+.divPassR input{
+    width: 100%;
+    padding-left: 1rem;
+    padding-right: 2rem;    
+}
+.divPassR img{
+    position: absolute;
+    margin-left: 14.5%;
+    width: 1.5%;
+    height: auto;
+    /*border: solid black;*/
 }
 
+
+
+.divSexRdb{
+    width: 85%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-top: 0.6rem;
+    margin-bottom: 0.6rem;
+    border: solid #f0eae7;
+}
 .rdbOption{
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    /*border: gray solid;*/
+    /*border: solid rgb(221, 221, 221);*/
+}
+.rdbOption label{
+font-size: 15px;
 }
 
-.rdbOption label{
-    font-size: 1.2rem;
+
+.divTyC{
+    margin-top: 0.5rem;
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    /*border: solid rgb(14, 68, 104);*/
 }
 
 
@@ -99,20 +138,26 @@
 */
 
 #btnRegistro{
+    width: 30%;
     padding: 0.5rem;
     margin-top: 0.5rem;
     border: solid 3px black;
     border-radius: 10px;
     font-size: 1rem;
-    background-color: rgb(221, 194, 41);
+    background-color: rgb(217, 191, 48);
     font-family:'Buxton Sketch';
     text-decoration: none;
     color: black;
 }
-
 #btnRegistro:hover{
-    /*font-size: 1rem;*/
+    border: solid 3px black;
+    border-radius: 10px;
+    font-size: 1rem;
     background-color: rgb(255, 153, 0);
+    transition: all ease-in-out 250ms;
+}
+#btnRegistro:disabled{
+    background-color: rgb(167, 118, 45);
 }
 
 
@@ -120,6 +165,21 @@
 #fillInputs, #nameInput, #appInput, #apmInput, #userInput, #ageInput, #phoneInput, #emailInput, #passInput, #confirmPassInput{
     color: red;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*//////////////////////////////////////////////////////////////////////*/
 /* Responsive(> 1024px) */

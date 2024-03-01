@@ -1,33 +1,47 @@
 import Link from "next/link"
+import { useState } from "react";
+import Image from "next/image";
 
 export function NavbarCliente() {
+    const [showDropdown, setShowDropdown] = useState(false);
+
+    const toggleDropdown = () => {
+        setShowDropdown(!showDropdown);
+    };
     return (
-
-        <div>
-            <nav className="navbarMain">
-                <div className="funcionesPublicas">
-                    <div className="logoDiv">
-                        <Link href="/"><img src="/images/logoChirris1.png" alt="logoChirris" className="logoChirris" /></Link>
-                    </div>
-                    <div className="enlaces">
-                        <Link href="/cliente">INICIO</Link>
-                        <Link href="/cliente/Productos">PRODUCTOS</Link>
-
-                    </div>
+        <nav className="navbarMain">
+            <ul className="contentNavbar">
+                <div className="login-Registro">
+                    <Link href="#">INICIO</Link>
                 </div>
-
-                <div className="funcionesUsuario">
-                    <h3>Bienvenido : [usuario]</h3>
-
-                    <div className="login-Registro">
-                        <Link href="./perfil">Perfil</Link>
-                        <Link href="./canasta">Canasta</Link>
-                        <Link href="/">Cerrar Sesion</Link>
+                <li>
+                    <div onClick={toggleDropdown} className="dropdown-toggle">
+                        PRODUCTOS
+                        {showDropdown && (
+                            <ul className="dropdown-menu">
+                                <li><Link href="#">TODO</Link></li>
+                                <li><Link href="#">BEBIDAS</Link></li>
+                                <li><Link href="#">POSTRES</Link></li>
+                            </ul>
+                        )}
                     </div>
+                </li>
+
+            </ul>
+
+            <div className="funcionesUsuario">
+                <h3>Bienvenido : [usuario]</h3>
+
+                <div className="divFunciones">
+                    <Link href="./perfil"><Image src={"/images/icos/perfil.png"} title="Ir a perfil" width={100} height={100} /></Link>
                 </div>
-
-            </nav>
-        </div>
-
+                <div className="divFunciones">
+                    <Link href="./canasta"><Image src={"/images/icos/canasta.png"} title="Ir a canasta" width={100} height={100} /></Link>
+                </div>
+                <div className="divFunciones">
+                    <Link href="/"><Image src={"/images/icos/cerrarSesion.png"} title="Cerrar sesion" width={100} height={100} /></Link>
+                </div>
+            </div>
+        </nav>
     )
 }

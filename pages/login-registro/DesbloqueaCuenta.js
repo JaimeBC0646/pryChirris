@@ -33,10 +33,15 @@ export function DesbloqueaCuenta() {
             const result = await axios.post(`/api/login-registro?action=activarCuenta&id=${idCliente}`, usuarioAlta);
             console.log(result)
             if (result) {
-                setMnsjAutenticacion("");
-                alert("Cuenta Activada...");
+                setMnsjAutenticacion("Reactivando cuenta, ya puede iniciar sesion :)");
+
+                const seg = 3000; //3 seg
+                setTimeout(async () => {
+                    router.push('/login-registro/Login');
+                }, seg);
+
+                //alert("Cuenta Activada...");
                 //router.push('./ActualizarContrasena');
-                router.push('/login-registro/Login');
             }
         }
         catch (error) {
@@ -60,33 +65,34 @@ export function DesbloqueaCuenta() {
 
     return (
         <div className="titleMod">
-            <h1>DESBLOQUEO DE LA CUENTA</h1>
+            <div className="divContentBox">
+                <h2>DESBLOQUEO DE LA CUENTA</h2>
 
-            <Image src="/images/lockIcon.png" id="frmRecuperaContra" className="lockIcon" alt="userImg" width={100} height={100} />
+                <Image src="/images/lockIcon.png" id="frmRecuperaContra" className="lockIcon" alt="userImg" width={100} height={100} />
 
-            <div className="recuperaContraForm">
-                <div className="divMessage">
-                    <h4>Ingresa el codigo que se envio al correo registrado para desbloquear la cuenta.</h4>
-                </div>
-
-                <label htmlFor="lblCampos" id="lblCampos" style={{ visibility: mnsjCampos ? 'visible' : 'hidden' }}>
-                    {mnsjCampos ? mnsjCampos : ""}
-                </label>
-                
-                <label htmlFor="lblAutenticacion" id="lblAutenticacion" style={{ visibility: mnsjAutenticacion ? 'visible' : 'hidden' }}>
-                    {mnsjAutenticacion ? mnsjAutenticacion : ""}
-                </label>
-
-                <form onSubmit={handleSubmit} className="buscaForm">
-                    <input type="text" name="txtCodigoVerificacion" id="txtCodigoVerificacion" placeholder="Codigo de verificación" title="Usuario o Correo" onChange={handleChange} />
-
-                    <div className="frmButtons">
-                        <button type="submit" className="btn" id="btnRecupera">ACTIVAR CUENTA</button>
-                        {/* <Link href="./Login" className="btn">CANCELAR</Link> */}
+                <div className="recuperaContraForm">
+                    <div className="divMessage">
+                        <h4>Ingresa el codigo que se envio al correo registrado para desbloquear la cuenta.</h4>
                     </div>
-                </form>
 
-                {/*
+                    <label htmlFor="lblCampos" id="lblCampos" style={{ visibility: mnsjCampos ? 'visible' : 'hidden' }}>
+                        {mnsjCampos ? mnsjCampos : ""}
+                    </label>
+
+                    <label htmlFor="lblAutenticacion" id="lblAutenticacion" style={{ visibility: mnsjAutenticacion ? 'visible' : 'hidden' }}>
+                        {mnsjAutenticacion ? mnsjAutenticacion : ""}
+                    </label>
+
+                    <form onSubmit={handleSubmit} className="buscaForm">
+                        <input type="text" name="txtCodigoVerificacion" id="txtCodigoVerificacion" placeholder="Codigo de verificación" title="Usuario o Correo" onChange={handleChange} />
+
+                        <div className="frmButtons">
+                            <button type="submit" className="btn" id="btnRecupera">ACTIVAR CUENTA</button>
+                            {/* <Link href="./Login" className="btn">CANCELAR</Link> */}
+                        </div>
+                    </form>
+
+                    {/*
                 <div className="homeLink">
                     <Link href="/">
                         <Image src="/images/homeIco.png" alt="homeIco" className="homeIco" />
@@ -94,6 +100,7 @@ export function DesbloqueaCuenta() {
                     </Link>
                 </div>
                 */}
+                </div>
             </div>
         </div>
     )

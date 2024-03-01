@@ -56,7 +56,7 @@ function FormLogin() {
             setMnsjCaptcha("");
             if (intentos == 1) {
                 setMnsjIntentos("Ha superado el limite de intentos, su cuenta ha sido bloqueada.\n Contacte con atencion al cliente para poder reactivar su cuenta ⚠");
-                alert("bloquiando")
+                //alert("bloquiando")
                 try {
                     await axios.post('/api/login-registro?action=bloquearCuenta', usuario);
                 }
@@ -70,64 +70,65 @@ function FormLogin() {
             else {
                 try {
                     const resultUser = await axios.post('/api/login-registro?action=usuarioL', usuario);
-                    //console.log("result: ", resultUser)
+                    //console.log("resultUser: ", resultUser)
+                    
                     //console.log("length: ", resultUser.data.length)
+                    //#Bjgamer003
+                    //data[0].intEstadoCuenta
 
                     if (resultUser.data.length > 0) {
-                        try {
-                            const resultLogin = await axios.post('/api/login-registro?action=login', usuario);
-                            console.log(resultLogin);
-                            //console.log("resultLogin.lenght : ", resultLogin.data.length);
-                            //console.log("resultLogin.lengh[0]t : ", resultLogin.data[0].length);
+                        //console.log("estadoCuenta: ", resultUser.data[0].intEstadoCuenta)
+                        if (resultUser.data[0].intEstadoCuenta) {
+                            try {
+                                const resultLogin = await axios.post('/api/login-registro?action=login', usuario);
+                                console.log("ResultLogin: ",resultLogin);
+                                //console.log("resultLogin.lenght : ", resultLogin.data.length);
+                                //console.log("resultLogin.lengh[0]t : ", resultLogin.data[0].length);
 
-                            if (resultLogin.data.length && resultLogin.data[0].length > 0){
-                                if(resultLogin.data[0][0].intEstadoCuenta === 0){
-                                    setMnsjAutenticacion("Esta cuenta se encuentra bloqueada, intente desbloquearla o contacte con servicio al cliente si desconoce el motivo ⚠");
-                                    
-                                }
-                                else{
-                                    //alert("Redirigiendo")
+                                if (resultLogin.data.length && resultLogin.data[0].length > 0) {
+
                                     const rol = resultLogin.data[0][0].idRol;
-                                    //alert("rol: " + rol)
-                                    
-                                    
-                                    switch (rol) {
-                                    case 1:
-                                        //Ruta Admin
-                                        router.push('../admin');
-                                        break;
-                                    case 2:
-                                        //Ruta Empleado
-                                        router.push('../empleado');
-                                        break;
-                                    case 3:
-                                        //Ruta Cliente
-                                        router.push('../cliente');
-                                        break;
-                                    default:
-                                        return res.status(405).end();
-                                    }
-                                    
+                                    setMnsjAutenticacion("Accediendo...");
+                                    const seg = 3000; //3 seg
+                                    setTimeout(async () => {
+                                        switch (rol) {
+                                            case 1:
+                                                //Ruta Admin
+                                                router.push('../admin');
+                                                break;
+                                            case 2:
+                                                //Ruta Empleado
+                                                router.push('../empleado');
+                                                break;
+                                            case 3:
+                                                //Ruta Cliente
+                                                router.push('../cliente');
+                                                break;
+                                            default:
+                                                return res.status(405).end();
+                                        }
+                                    }, seg);
                                 }
-                                
-                            }
-                            else{
-                                setMnsjAutenticacion("Credenciales incorrectos ⚠");
-                                setSumaIntentos(intentos - 1)
-                            }
+                                else {
+                                    setMnsjAutenticacion("Credenciales incorrectos ⚠");
+                                    setSumaIntentos(intentos - 1)
+                                }
 
-                        }
-                        catch (err) {
-                            // Contraseña incorrecta
+                            }
+                            catch (err) {
+                                // Contraseña incorrecta
                                 console.error("Error login:", err);
+                            }
                         }
-
+                        else {
+                            //alert("no")
+                            setMnsjAutenticacion("Esta cuenta se encuentra bloqueada, intente desbloquearla o contacte con servicio al cliente si desconoce el motivo ⚠");
+                        }
 
                     }
-                    else{
+                    else {
                         setMnsjAutenticacion("Usuario no registrado ⚠");
                     }
-
 
                 }
                 catch (error) {
@@ -152,28 +153,18 @@ function FormLogin() {
 
     return (
         <div className="titleMod">
-            <h1>INICIO DE SESION</h1>
 
-            <Image src="/images/userIcon.png" id="frmLogin" className="icoUser" alt="userImg" width={100} height={100} />
+            <div className="divContentFrmL">
+                <h2>INICIO DE SESION</h2>
+                <Image src="/images/userIcon.png" id="frmLogin" className="icoUser" alt="userImg" width={100} height={100} />
 
-            <div className="loginForm">
-                <form onSubmit={handleSubmit} className="frmLogin">
-
-
-
-                    <label htmlFor="lblAutenticacion" id="lblAutenticacion"> Intentos: {intentos}</label>
-                    {/*
-                    <label htmlFor="lblIdentidad" id="txtWarning" style={{ visibility: formularioValido ? 'hidden' : 'visible' }}>
-                        Usuario o Contraseña incorrectos ⚠
-                    </label>
-                    */}
-
-
+                <div className="messageBlock">
                     <label htmlFor="lblIdentidad" id="txtWarning" style={{ visibility: mnsjIntentos ? 'visible' : 'hidden' }}>
                         {mnsjIntentos ? mnsjIntentos : ""}
                     </label>
+                </div>
 
-
+                <div className="messageValidations">
                     <label htmlFor="lblAutenticacion" id="lblAutenticacion" style={{ visibility: mnsjAutenticacion ? 'visible' : 'hidden' }}>
                         {mnsjAutenticacion ? mnsjAutenticacion : ""}
                     </label>
@@ -181,34 +172,54 @@ function FormLogin() {
                     <label htmlFor="lblCampos" id="lblCampos" style={{ visibility: mnsjCampos ? 'visible' : 'hidden' }}>
                         {mnsjCampos ? mnsjCampos : ""}
                     </label>
-                    <input type="text" name="txtIdentidad" id="txtIdentidad" placeholder="Usuario o correo" title="Usuario o Correo" onChange={handleChange} />
+                </div>
 
+                <div className="loginForm">
+                    <form onSubmit={handleSubmit} className="frmLogin">
+                        {/*
+                        <label htmlFor="lblAutenticacion" id="lblAutenticacion"> Intentos: {intentos}</label>
+                        */}
 
-                    <input type={mostrarPass ? "text" : "password"} name="txtPassword" id="txtPassword" placeholder="Contraseña" title="Contraseña" onChange={handleChange} />
-                    <button type="button" onClick={clickMostrarPass} className="password-toggle-btn"> <Image src={mostrarPass ? "/images/hidePass.png" : "/images/showPass.png"} alt="icoPass" width={100} height={100} /> </button>
+                        <div className="divIdentity">
+                            <input type="text" name="txtIdentidad" id="txtIdentidad" placeholder="Usuario o correo" title="Usuario o Correo" onChange={handleChange} />
+                        </div>
 
+                        <div className="divPassL">
+                            <input type={mostrarPass ? "text" : "password"} name="txtPassword" id="txtPassword" placeholder="Contraseña" title="Contraseña" onChange={handleChange} />
+                            <Image onClick={clickMostrarPass} src={mostrarPass ? "/images/hidePass.png" : "/images/showPass.png"} alt="icoPass" width={100} height={100} />
+                        </div>
 
-                    <label htmlFor="lblCampos" id="lblCampos" style={{ visibility: mnsjCaptcha ? 'visible' : 'hidden' }}>
-                        {mnsjCaptcha ? mnsjCaptcha : ""}
-                    </label>
-                    <ReCAPTCHA sitekey={siteKey} onChange={() => setCaptchaEstado(true)} />
+                        <label htmlFor="lblCampos" id="lblCampos" style={{ visibility: mnsjCaptcha ? 'visible' : 'hidden' }}>
+                            {mnsjCaptcha ? mnsjCaptcha : ""}
+                        </label>
 
+                        <div className="divCaptcha">
+                            <ReCAPTCHA sitekey={siteKey} onChange={() => setCaptchaEstado(true)} />
+                        </div>
 
-                    <button id="btnlogin" disabled={btnEstado}> INICIAR SESION </button>
-                </form>
+                        <button id="btnLogin" disabled={btnEstado}> INICIAR SESION </button>
+                    </form>
 
-                <div className="homeLink">
-                    <Link href="./RecuperarContrasena">Olvidaste tu contraseña?</Link>
-                    <Link href="./RecuperarCuenta">Tu cuenta esta bloqueada?</Link>
-                    <Link href="./Registro">Aun no tienes cuenta? Crear cuenta</Link>
-                    <Link href="/">
-                        <Image src="/images/homeIco.png" alt="homeIco" className="homeIco" width={100} height={100} />
-                        Volver al Inicio
-                    </Link>
+                    <div className="homeLink">
+                        <Link href="./RecuperarContrasena">Olvidaste tu contraseña?</Link>
+                        <Link href="./RecuperarCuenta">Tu cuenta esta bloqueada?</Link>
+                        <Link href="./Registro">Aun no tienes cuenta? Crear cuenta</Link>
+
+                        <Link href="/">
+                            <div>
+                                <Image src="/images/homeIco.png" alt="homeIco" className="homeIco" width={100} height={100} />
+                                Volver al Inicio
+                            </div>
+                        </Link>
+
+                    </div>
                 </div>
             </div>
         </div>
     )
 }
 
+{/*
+                        
+                        */}
 export default FormLogin;

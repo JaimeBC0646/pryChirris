@@ -39,7 +39,12 @@ export function ActualizarContrasena() {
         // Validar la contraseña con la expresión regular
         const regexPassRule = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$\-+_*/':;!¡?¿]).{8,}$/;
         if (usuario.txtNewContra !== "" && !regexPassRule.test(usuario.txtNewContra)) {
-            setMnsjReglasPass("La contraseña debe contener al menos una mayúscula, una minúscula, un número y un carácter especial, y tener al menos 8 caracteres de longitud");
+            setMnsjReglasPass("Reglas de Contraseña ⚠  \n● Minimo 8 caracteres ⓘ "
+                            + "\n● Al menos una letra mayúscula ⓘ "
+                            + "\n● Al menos una letra minucula ⓘ "
+                            + "\n● Al menos un dígito ⓘ "
+                            + "\n● No espacios en blanco ⓘ "
+                            + "\n● Al menos 1 caracter especial ⓘ ");
             return;
             //setBtnEstado(true); //Habilita el envio del form (actualiza)
         } else {
@@ -51,14 +56,14 @@ export function ActualizarContrasena() {
         try {
             const idCliente = router.query.id; // Tomo el ID de la URL
 
-                const result = await axios.put(`/api/login-registro?action=actualizaContra&id=${idCliente}`, usuario);
-                console.log(result)
+            const result = await axios.put(`/api/login-registro?action=actualizaContra&id=${idCliente}`, usuario);
+            console.log(result)
 
-                if (result) {
-                    alert("Actualizado..."); //Cambiar por modal u otra alerta
-                    router.push('./Login');
-                }
-            
+            if (result) {
+                alert("Actualizado..."); //Cambiar por modal u otra alerta
+                router.push('./Login');
+            }
+
         }
         catch (error) {
             console.error("Error busqueda:", error);
@@ -70,7 +75,7 @@ export function ActualizarContrasena() {
     const handleChange = ({ target: { name, value } }) => {
 
         setUsuario({ ...usuario, [name]: value })
-        
+
         if (value.trim() !== "") {
             setMnsjCampos("");
         }
@@ -78,39 +83,48 @@ export function ActualizarContrasena() {
     }
     return (
         <div className="titleMod">
-            <h1>ACTUALIZACION DE CONTRASEÑA</h1>
+            <div className="divContentBox">
+                <h2>ACTUALIZACIÓN DE CONTRASEÑA</h2>
 
-            <Image src="/images/lockIcon.png" id="frmRecuperaContra" className="lockIcon" alt="userImg" width={100} height={100} />
+                <Image src="/images/lockIcon.png" id="frmRecuperaContra" className="lockIcon" alt="userImg" width={100} height={100} />
 
-            <div className="actualizarContraForm">
-                <div className="divMessage">
-                    <h4>Genera una nueva contraseña.</h4>
+                <div>
+                    <label htmlFor="lblCampos" id="lblCampos" style={{ visibility: mnsjCampos ? 'visible' : 'hidden' }}>
+                        {mnsjCampos ? mnsjCampos : ""}
+                    </label>
+
+                    <label id="lblAdvertencias" style={{ visibility: mnsjReglasPass ? 'visible' : 'hidden' }}>
+                        {mnsjReglasPass ? mnsjReglasPass : ""}
+                    </label>
                 </div>
 
-                <label htmlFor="lblCampos" id="lblCampos" style={{ visibility: mnsjCampos ? 'visible' : 'hidden' }}>
-                    {mnsjCampos ? mnsjCampos : ""}
-                </label>
-
-                <label htmlFor="lblReglasPass" id="lblReglasPass" style={{ visibility: mnsjReglasPass ? 'visible' : 'hidden' }}>
-                    {mnsjReglasPass ? mnsjReglasPass : ""}
-                </label>
-
-                <form onSubmit={handleSubmit} className="updContraForm">
-                    <input type={mostrarPass ? "text" : "password"} name="txtNewContra" id="txtNewContra" placeholder="Contraseña nueva" title="Contraseña nueva" onChange={handleChange} />
-                    <button type="button" onClick={clickMostrarPass} className="password-toggle-btn"> <Image src={mostrarPass ? "/images/hidePass.png" : "/images/showPass.png"} alt="icoPass" width={100} height={100}/> </button>
-
-                    <div className="frmButtons">
-                        <button type="submit" className="btn" id="btnActualizaContra" > ACTUALIZAR CONTRASEÑA </button>
-                        {/* disabled={btnEstado} */}
-                        <Link href="./Login" className="btn">CANCELAR</Link>
+                <div className="actualizarContraForm">
+                    <div className="divMessage">
+                        <h4>Genera una nueva contraseña.</h4>
                     </div>
-                </form>
 
-                <div className="homeLink">
-                    <Link href="/">
-                        <Image src="/images/homeIco.png" alt="homeIco" className="homeIco" width={100} height={100} />
-                        Volver al Inicio
-                    </Link>
+                    <form onSubmit={handleSubmit} className="updContraForm">
+
+                        <div className="divRespuesta">
+                            <input type={mostrarPass ? "text" : "password"} name="txtNewContra" id="txtNewContra" placeholder="Contraseña nueva" title="Contraseña nueva" onChange={handleChange} />
+                            <Image onClick={clickMostrarPass} src={mostrarPass ? "/images/hidePass.png" : "/images/showPass.png"} alt="icoAwnser" width={100} height={100} />
+                        </div>
+
+                        <div className="frmButtons">
+                            <button type="submit" className="btn" id="btnActualizaContra" > ACTUALIZAR CONTRASEÑA </button>
+                            {/* disabled={btnEstado} */}
+                            <Link href="./Login" className="btn">CANCELAR</Link>
+                        </div>
+                    </form>
+
+                    <div className="homeLink">
+                        <Link href="/">
+                            <div>
+                                <Image src="/images/homeIco.png" alt="homeIco" className="homeIco" width={100} height={100} />
+                                Volver al Inicio
+                            </div>
+                        </Link>
+                    </div>
                 </div>
             </div>
         </div>

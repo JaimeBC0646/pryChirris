@@ -1,51 +1,100 @@
-.lockIcon{
-    margin-top: 1rem;
-    width: 10%;
+.divContentBox{
+    width:  45%;
+    margin:3rem;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 2rem;
+    border: solid black;
 }
 
-.recuperaContraForm{
+.divContentBox h2, .divContentBox h3{
+text-align: center;
+}
+
+.lockIcon{
+    margin-top: 1rem;
+    width: 15%;
+
+}
+
+.recuperaContraForm, .actualizarContraForm{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 30%;
+    width: 65%;
     margin-top: 1rem;
     margin-bottom: 1rem;
-    /*border: black solid;*/
+    /*border: solid orangered;*/
 }
-
-/*
 .divMessage{
-    background-color: #CA7B42;
-    border: solid;
+    background: #bb693d;
     border-radius: 3rem;
-    padding: 1.5rem;
-    opacity:50;
+    color: #FFD7AB;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    border: solid black;
 }
-*/
 
-.buscaForm{
+
+.buscaForm, .updContraForm{
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    /*border: white solid;*/
+    /*border: rgb(190, 43, 43) solid;*/
 }
 
-.buscaForm input, .updContraForm input{
-    width: 90%;
+.buscaForm input{
+    width: 75%;
     border: solid 3px black;
     border-radius: 10px;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
-    margin-top: 0.5rem;
+    margin-top: 1rem;
     margin-bottom: 0.5rem;
     font-size: 1rem;
     padding-left: 1rem;
     padding-right: 1rem;
     /*font-family:'Buxton Sketch';*/
 }
+
+
+.divRespuesta{
+    width: 100%;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*border: solid yellowgreen;*/
+}
+
+.divRespuesta input{
+    width: 90%;
+    border: solid 3px black;
+    border-radius: 10px;
+
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 2.5rem;
+    font-size: 1rem;
+    
+}
+.divRespuesta img{
+    position: absolute;
+    margin-left: 16%;
+    width: 1.5%;
+    height: auto;
+    /*border: solid black;*/
+}
+
 
 
 .frmButtons{
@@ -63,6 +112,8 @@
     color: black;
     font-size: 1rem;
 
+    display: flex;
+    align-items: center;
     padding: 0.5rem;
     margin-top: 0.5rem;
     margin-left: 1rem;

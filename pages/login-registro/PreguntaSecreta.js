@@ -24,7 +24,7 @@ export function ActualizarContrasena() {
     //Campo vacio
     const [mnsjCampos, setMnsjCampos] = useState("");
     //Reglas de nueva contraseña y actualizacion
-    const [mnsjResIncorrecta, setMnsjResIncorrecta] = useState("");
+    const [mnsjRespuesta, setMnsjRespuesta] = useState("");
     //Intentos para accesar con respuesta de PS
     const [intentos, setSumaIntentos] = useState(3);
     const [mnsjIntentos, setMnsjIntentos] = useState(0);
@@ -39,7 +39,7 @@ export function ActualizarContrasena() {
         }
         else {
             if (intentos == 1) {
-                setMnsjResIncorrecta("")
+                setMnsjRespuesta("")
                 setMnsjIntentos("Ha superado el limite de intentos, su cuenta ha sido bloqueada.\n Contacte con servicio al cliente para poder reactivar su cuenta ⚠");
                 alert("bloquiando")
                 try {
@@ -71,20 +71,23 @@ export function ActualizarContrasena() {
                 //Si la cuenta esta desbloqueada (respuesta de funcion en la Api local)
                 if (result.data[0][0].intEstadoCuenta === 1) {
                     //alert("Genera nueva pass")
-
-                    router.push({
-                        //Ruta a donde redirecciona
-                        pathname: './ActualizarContrasena',
-                        //paso el id recuperado de la API
-                        query: {
-                            id: result.data[0][0].idUsuario
-                        }
-                    });
+                    setMnsjRespuesta("Respuesta confirmada");
+                    const seg = 3000; //3 seg
+                    setTimeout(async () => {
+                        router.push({
+                            //Ruta a donde redirecciona
+                            pathname: './ActualizarContrasena',
+                            //paso el id recuperado de la API
+                            query: {
+                                id: result.data[0][0].idUsuario
+                            }
+                        });
+                    }, seg);
 
                 }
                 else {
                     // Si se accede de manera ilicita a esta parte, si la cuenta esta bloqueada, no permite el paso a la generacion de nueva contraseña
-                    setMnsjResIncorrecta("Esta cuenta se encuentra bloqueada, intente desbloquearla o contacte con servicio al cliente si desconoce el motivo ⚠");
+                    setMnsjRespuesta("Esta cuenta se encuentra bloqueada, intente desbloquearla o contacte con servicio al cliente si desconoce el motivo ⚠");
                 }
 
 
@@ -92,7 +95,7 @@ export function ActualizarContrasena() {
             }
             else {
                 //Informacion incorrecta -1 intento
-                setMnsjResIncorrecta("Respuesta incorrecta, intente de nuevo")
+                setMnsjRespuesta("Respuesta incorrecta, intente de nuevo")
                 setSumaIntentos(intentos - 1);
 
             }
@@ -111,56 +114,71 @@ export function ActualizarContrasena() {
         if (value.trim() !== "") {
             setMnsjCampos("");
         }
-        setMnsjResIncorrecta("");
+        setMnsjRespuesta("");
 
     }
     return (
         <div className="titleMod">
-            <h1>AUTENTICACION DE LA CUENTA</h1>
+            <div className="divContentBox">
+                <h2>PREGUNTA SECRETA</h2>
+                <h3>(AUTENTICACIÓN PARA ACTUALIZACIÓN DE CONTRASEÑA)</h3>
 
-            <Image src="/images/lockIcon.png" id="frmRecuperaContra" className="lockIcon" alt="userImg" width={100} height={100} />
+                <Image src="/images/icos/lock.png" id="frmRecuperaContra" className="lockIcon" alt="userImg" width={100} height={100} />
 
-            <div className="actualizarContraForm">
-                <div className="divMessage">
-                    <h4>Responda a la pregunta para poder actualizar su contraseña.</h4>
-                </div>
-
-                <label htmlFor="lblCampos" id="lblCampos" style={{ visibility: mnsjCampos ? 'visible' : 'hidden' }}>
-                    {mnsjCampos ? mnsjCampos : ""}
-                </label>
-
-                <label htmlFor="lblReglasPass" id="lblReglasPass" style={{ visibility: mnsjResIncorrecta ? 'visible' : 'hidden' }}>
-                    {mnsjResIncorrecta ? mnsjResIncorrecta : ""}
-                </label>
-
-                <form onSubmit={handleSubmit} className="updContraForm">
-                    <label htmlFor="lblAutenticacion" id="lblAutenticacion"> Intentos: {intentos}</label>
-
+                <div className="messageBlock">
                     <label htmlFor="lblIdentidad" id="txtWarning" style={{ visibility: mnsjIntentos ? 'visible' : 'hidden' }}>
                         {mnsjIntentos ? mnsjIntentos : ""}
                     </label>
-
-                    <label htmlFor="lblPregunta" id="lblPregunta">
-                        {router.query.pregunta}
+                </div>
+                
+                <div className="messageValidations">
+                    <label htmlFor="lblCampos" id="lblCampos" style={{ visibility: mnsjCampos ? 'visible' : 'hidden' }}>
+                        {mnsjCampos ? mnsjCampos : ""}
                     </label>
 
+                    <label htmlFor="lblReglasPass" id="lblReglasPass" style={{ visibility: mnsjRespuesta ? 'visible' : 'hidden' }}>
+                        {mnsjRespuesta ? mnsjRespuesta : ""}
+                    </label>
 
-                    <input type={mostrarPass ? "text" : "password"} name="txtRespuesta" id="txtRespuesta" placeholder="Respuesta secreta" title="Contraseña nueva" onChange={handleChange} />
-                    <button type="button" onClick={clickMostrarPass} className="password-toggle-btn"> <Image src={mostrarPass ? "/images/hidePass.png" : "/images/showPass.png"} alt="icoPass" width={100} height={100} /> </button>
+                    <label htmlFor="lblAutenticacion" id="lblAutenticacion" hidden> Intentos: {intentos}</label>
+                </div>
 
 
-                    <div className="frmButtons">
-                        <button type="submit" className="btn" id="btnActualizaContra" disabled={btnEstado}> COMPROBAR RESPUESTA </button>
-                        {/* disabled={btnEstado} */}
-                        <Link href="./Login" className="btn">CANCELAR</Link>
+                <div className="actualizarContraForm">
+                    <div className="divMessage">
+                        <h4>Responda a la pregunta para poder actualizar su contraseña.</h4>
                     </div>
-                </form>
 
-                <div className="homeLink">
-                    <Link href="/">
-                        <Image src="/images/homeIco.png" alt="homeIco" className="homeIco" width={100} height={100} />
-                        Volver al Inicio
-                    </Link>
+
+
+                    <form onSubmit={handleSubmit} className="updContraForm">
+                        <label htmlFor="lblPregunta" id="lblPregunta">
+                            {router.query.pregunta}
+                        </label>
+
+
+                        <div className="divRespuesta">
+                            <input type={mostrarPass ? "text" : "password"} name="txtRespuesta" id="txtRespuesta" placeholder="Respuesta secreta" title="Respuesta secreta" onChange={handleChange} />
+                            <Image onClick={clickMostrarPass} src={mostrarPass ? "/images/hidePass.png" : "/images/showPass.png"} alt="icoAwnser" width={100} height={100} />
+                        </div>
+
+
+                        <div className="frmButtons">
+                            <button type="submit" className="btn" id="btnActualizaContra" disabled={btnEstado}> COMPROBAR </button>
+                            {/* disabled={btnEstado} */}
+                            <Link href="./Login" className="btn">CANCELAR</Link>
+                        </div>
+                    </form>
+
+                    <div className="homeLink">
+                        <Link href="/">
+                            <div>
+                                <Image src="/images/homeIco.png" alt="homeIco" className="homeIco" width={100} height={100} />
+                                Volver al Inicio
+                            </div>
+                        </Link>
+                    </div>
+
                 </div>
             </div>
         </div>

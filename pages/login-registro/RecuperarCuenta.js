@@ -31,11 +31,11 @@ export function RecuperarCuenta() {
         try {
             //Enviar por post la accion a realizar dependiendo del formulario
             const resultUser = await axios.post('/api/login-registro?action=recuperaCuenta', usuario);
-            console.log("Result: ",resultUser)
+            console.log("Result: ", resultUser)
 
             //console.log("resLength: ",resultUser.data[0].length)
             //console.log("estado:  ",resultUser.data[0][0].intEstadoCuenta);
-            
+
 
             //1 (encontro la cuenta) o 0 (no encontro)
             if (resultUser.data !== "") {
@@ -44,31 +44,35 @@ export function RecuperarCuenta() {
                 //console.log("resLength: ",resultUser.data[0].length);
                 //console.log("estado: ",resultUser.data[0][0].intEstadoCuenta)
 
-                if(resultUser.data[0].length === 1 && resultUser.data[0][0].intEstadoCuenta === 0){
+                if (resultUser.data[0].length === 1 && resultUser.data[0][0].intEstadoCuenta === 0) {
                     //alert("si")
                     //alert("El usuario esta bloqueado, redirigiendo");
-                    
-                    router.push({
-                        //Ruta a donde redirecciona
-                        pathname: './DesbloqueaCuenta',
-                        //paso el id recuperado de la API
-                        query: {
-                            id: resultUser.data[0][0].idUsuario,
-                        }
-                    });
-                    
+                    setMnsjAutenticacion("Cuenta encontrada, redirigiendo...");
+
+                    const seg = 3000; //3 seg
+                    setTimeout(async () => {
+                        router.push({
+                            //Ruta a donde redirecciona
+                            pathname: './DesbloqueaCuenta',
+                            //paso el id recuperado de la API
+                            query: {
+                                id: resultUser.data[0][0].idUsuario,
+                            }
+                        });
+                    }, seg);
+
                 }
-                else{
+                else {
                     //alert("no")
                     setMnsjAutenticacion("La cuenta no se encuentra bloquada, puede iniciar sesion con normalidad");
                 }
-                
+
             }
             else {
                 setMnsjAutenticacion("Usuario no encontrado ⚠");
             }
-            
-            
+
+
         }
         catch (error) {
             console.error("Error de recuperar:", error);
@@ -90,38 +94,41 @@ export function RecuperarCuenta() {
 
     return (
         <div className="titleMod">
-            <h1>RECUPERACION DE CUENTA</h1>
+            <div className="divContentBox">
+                <h2>RECUPERACIÓN DE CUENTA</h2>
 
-            <Image src="/images/lockIcon.png" id="frmRecuperaContra" className="lockIcon" alt="userImg" width={100} height={100} />
+                <Image src="/images/lockIcon.png" id="frmRecuperaContra" className="lockIcon" alt="userImg" width={100} height={100} />
 
-            <div className="recuperaContraForm">
-                <div className="divMessage">
-                    <h4>Ingresa tu correo electrónico o nombre de usuario para buscar tu cuenta.</h4>
+                <div>
+                    <label htmlFor="lblCampos" id="lblCampos" style={{ visibility: mnsjCampos ? 'visible' : 'hidden' }}>
+                        {mnsjCampos ? mnsjCampos : ""}
+                    </label>
+
+                    <label htmlFor="lblAutenticacion" id="lblAutenticacion" style={{ visibility: mnsjAutenticacion ? 'visible' : 'hidden' }}>
+                        {mnsjAutenticacion ? mnsjAutenticacion : ""}
+                    </label>
                 </div>
-
-                <label htmlFor="lblCampos" id="lblCampos" style={{ visibility: mnsjCampos ? 'visible' : 'hidden' }}>
-                    {mnsjCampos ? mnsjCampos : ""}
-                </label>
-
-                <label htmlFor="lblAutenticacion" id="lblAutenticacion" style={{ visibility: mnsjAutenticacion ? 'visible' : 'hidden' }}>
-                    {mnsjAutenticacion ? mnsjAutenticacion : ""}
-                </label>
-
-                <form onSubmit={handleSubmit} className="buscaForm">
-                    <input type="text" name="txtIdentidad" id="txtIdentidad" placeholder="Usuario o correo" title="Usuario o Correo" onChange={handleChange} />
-
-                    <div className="frmButtons">
-                        <button type="submit" className="btn" id="btnRecupera">BUSCAR</button>
-
-                        <Link href="./Login" className="btn">CANCELAR</Link>
+                <div className="recuperaContraForm">
+                    <div className="divMessage">
+                        <h4>Ingresa tu correo electrónico o nombre de usuario para buscar tu cuenta.</h4>
                     </div>
-                </form>
 
-                <div className="homeLink">
-                    <Link href="/">
-                        <Image src="/images/homeIco.png" alt="homeIco" className="homeIco" width={100} height={100} />
-                        Volver al Inicio
-                    </Link>
+                    <form onSubmit={handleSubmit} className="buscaForm">
+                        <input type="text" name="txtIdentidad" id="txtIdentidad" placeholder="Usuario o correo" title="Usuario o Correo" onChange={handleChange} />
+
+                        <div className="frmButtons">
+                            <button type="submit" className="btn" id="btnRecupera">BUSCAR</button>
+
+                            <Link href="./Login" className="btn">CANCELAR</Link>
+                        </div>
+                    </form>
+
+                    <div className="homeLink">
+                        <Link href="/">
+                            <Image src="/images/homeIco.png" alt="homeIco" className="homeIco" width={100} height={100} />
+                            Volver al Inicio
+                        </Link>
+                    </div>
                 </div>
             </div>
         </div>

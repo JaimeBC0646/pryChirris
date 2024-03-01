@@ -1,0 +1,172 @@
+.espacio{
+    margin-top: 5rem;
+}
+.espacio2{
+    margin-top: 15rem;
+}
+.espacio3{
+    margin-top: 25rem;
+}
+
+
+
+body {
+    /*
+    #FFD7AB (Crema Blanco)
+    #E6B68B (Crema crema)
+    #CD966C (Crema Cafe leve)
+    #B4764F (Crema Cafe )
+    #9A5833 (Crema Cafe oscuro)
+    */
+    
+    background-color: #f0eae7;
+  /*  
+  //Imagen de fondo
+    background-image: url("/imgNew/bg_wood.jpg");   
+
+    //Ajusta ancho 100%, altura automatica
+    background-size: 50% auto;
+
+    //Evita que la imagen se repita
+    background-repeat: no-repeat; 
+    */
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+
+
+.banner{
+    /*background-image: url("/imgNew/bannerCoffee_wood4.jpg");*/
+    /*f18f38*/
+    display: flex;
+    justify-content: center;
+    
+    align-items: center;
+}
+.banner h1{
+    margin-left: 3rem;
+    margin-right: 3rem;
+
+}
+.banner img{
+    width: 8%;
+    height: auto;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    /*border: black solid;*/
+}
+
+
+.bodyMain{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 2rem;
+    /*border: rgb(60, 255, 0) solid;*/
+}
+
+
+.content_PublicMain{
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    /*border:solid red;*/
+    margin-bottom: 1rem;
+}
+
+.divWelcome{
+    width: 45%;
+    padding: 2rem;
+    /*border: solid rgb(202, 45, 71);*/
+}
+
+.contentCarousel{
+    /*ANCHO DEL CONTENEDOR DE INFO DEL & DE CARRUSEL*/
+    width: 50%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    /*border:solid purple;*/
+}
+.contentCarousel h2{
+    text-align: center;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+.divCarousel{
+    /**/
+    width: 75%;
+    border:solid rgb(0, 0, 0) 5px;
+    border-radius: 4rem;
+    overflow: hidden;
+}
+.productsCarousel img{
+    height: 25rem;
+    border-radius: 3.5rem;
+}
+
+
+.topProducts{
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /*border:solid cyan;*/
+}
+.topProducts h2{  
+    text-align: center;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+.listTop{
+    border: solid black;
+    width: 80%;
+    padding: 1rem;
+}
+
+
+.divTimeService{
+    width: 55%;
+    padding: 2rem;
+    /*border: solid rgb(66, 211, 55);*/
+}
+
+
+
+
+
+
+
+.infoDireccion{
+    width: 90%;
+    padding: 0.5rem;
+    margin: 2rem;
+    border: solid black;
+    border-radius: 2rem;
+    text-align: center;
+    background-color: #895B4A;
+    color:white;
+}
+
+
+/* -----------------------------------------------------*/
+.messageBlock{
+    width: 80%;
+    margin: 1rem;
+    /*border: solid rgb(228, 51, 131);*/
+}
+.messageValidations{
+    width: 80%;
+    margin: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    /*border: solid rebeccapurple;*/
+}
+
+.messageValidations label{
+    font-size: 1rem;
+    color: red;
+}

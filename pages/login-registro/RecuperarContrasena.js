@@ -32,17 +32,17 @@ export function RecuperarContrasena() {
             //Enviar por post la accion a realizar dependiendo del formulario
             const result = await axios.post('/api/login-registro?action=recuperaContra', usuario);
 
-            console.log("(CLIENTE result): ", result);
+            //console.log("(CLIENTE result): ", result);
             //console.log("length: ",result.data[0].length);
-            
-            
+
+
             if (result.data !== "" && result.data[0].length > 0) {
                 //alert("Encontrado...");
 
                 //console.log("estado: ", result.data[0][0].intEstadoCuenta)
                 if (result.data[0][0].intEstadoCuenta !== 0) {
                     //alert("redirige")
-                    
+
                     router.push({
                         //Ruta a donde redirecciona
                         pathname: './PreguntaSecreta',
@@ -52,7 +52,7 @@ export function RecuperarContrasena() {
                             pregunta: result.data[0][0].pregunta
                         }
                     });
-                    
+
                 }
                 else {
                     setMnsjAutenticacion("Esta cuenta se encuentra bloqueada, intente desbloquearla o contacte con servicio al cliente si desconoce el motivo ⚠");
@@ -85,39 +85,57 @@ export function RecuperarContrasena() {
 
     return (
         <div className="titleMod">
-            <h1>RECUPERACION DE CONTRASEÑA</h1>
+            <div className="divContentBox">
+                <h2>RECUPERACIÓN DE CONTRASEÑA</h2>
 
-            <Image src="/images/lockIcon.png" id="frmRecuperaContra" className="lockIcon" alt="userImg" width={100} height={100} />
+                <Image src="/images/icos/lock.png" id="frmRecuperaContra" className="lockIcon" alt="userImg" width={100} height={100} />
 
-            <div className="recuperaContraForm">
-                <div className="divMessage">
-                    <h4>Ingresa tu correo electrónico o nombre de usuario para buscar tu cuenta.</h4>
+
+
+
+                <div className="messageValidations">
+                    <label htmlFor="lblCampos" id="lblCampos" style={{ visibility: mnsjCampos ? 'visible' : 'hidden' }}>
+                        {mnsjCampos ? mnsjCampos : ""}
+                    </label>
+
+                    <label htmlFor="lblAutenticacion" id="lblAutenticacion" style={{ visibility: mnsjAutenticacion ? 'visible' : 'hidden' }}>
+                        {mnsjAutenticacion ? mnsjAutenticacion : ""}
+                    </label>
                 </div>
 
-                <label htmlFor="lblCampos" id="lblCampos" style={{ visibility: mnsjCampos ? 'visible' : 'hidden' }}>
-                    {mnsjCampos ? mnsjCampos : ""}
-                </label>
 
-                <label htmlFor="lblAutenticacion" id="lblAutenticacion" style={{ visibility: mnsjAutenticacion ? 'visible' : 'hidden' }}>
-                    {mnsjAutenticacion ? mnsjAutenticacion : ""}
-                </label>
 
-                <form onSubmit={handleSubmit} className="buscaForm">
-                    <input type="text" name="txtIdentidad" id="txtIdentidad" placeholder="Usuario o correo" title="Usuario o Correo" onChange={handleChange} />
-
-                    <div className="frmButtons">
-                        <button type="submit" className="btn" id="btnRecupera">BUSCAR</button>
-
-                        <Link href="./Login" className="btn">CANCELAR</Link>
+                <div className="recuperaContraForm">
+                    <div className="divMessage">
+                        <h4>Ingresa tu correo electrónico o nombre de usuario para buscar tu cuenta.</h4>
                     </div>
-                </form>
 
-                <div className="homeLink">
-                    <Link href="/">
-                        <Image src="/images/homeIco.png" alt="homeIco" className="homeIco" width={100} height={100} />
-                        Volver al Inicio
-                    </Link>
+                    <form onSubmit={handleSubmit} className="buscaForm">
+                        
+                        
+                        
+                        
+                        
+                        <input type="text" name="txtIdentidad" id="txtIdentidad" placeholder="Usuario o correo" title="Usuario o Correo" onChange={handleChange} />
+
+                        <div className="frmButtons">
+                            <button type="submit" className="btn" id="btnRecupera">BUSCAR</button>
+
+                            <Link href="./Login" className="btn">CANCELAR</Link>
+                        </div>
+                    </form>
+
+                    <div className="homeLink">
+                        <Link href="/">
+                            <div>
+                                <Image src="/images/homeIco.png" alt="homeIco" className="homeIco" width={100} height={100} />
+                                Volver al Inicio
+                            </div>
+                        </Link>
+                    </div>
+                    
                 </div>
+
             </div>
         </div>
     )
